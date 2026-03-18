@@ -1088,7 +1088,11 @@ body {
   color: var(--white);
   cursor: pointer;
   margin-left: auto;
-  color: var(--navy);
+}
+
+.sort-select option {
+  background: var(--navy);
+  color: var(--white);
 }
 
 .stories-grid {
@@ -2420,10 +2424,10 @@ body {
     <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;" class="fade-in">
       <div class="filter-tabs" id="awardFilterTabs" style="justify-content:center;">
         <button class="filter-tab active" onclick="filterStories('전체')" data-ko="전체" data-en="All">전체</button>
-        <button class="filter-tab" onclick="filterStories('자율')">자율</button>
-        <button class="filter-tab" onclick="filterStories('성장')">성장</button>
-        <button class="filter-tab" onclick="filterStories('불굴')">불굴</button>
-        <button class="filter-tab" onclick="filterStories('원팀')">원팀</button>
+        <button class="filter-tab" onclick="filterStories('자율')" data-ko="자율" data-en="Autonomy">자율</button>
+        <button class="filter-tab" onclick="filterStories('성장')" data-ko="성장" data-en="Growth">성장</button>
+        <button class="filter-tab" onclick="filterStories('불굴')" data-ko="불굴" data-en="Grit">불굴</button>
+        <button class="filter-tab" onclick="filterStories('원팀')" data-ko="원팀" data-en="One Team">원팀</button>
       </div>
       <select class="sort-select" id="awardSort" onchange="sortStories()">
         <option value="latest" data-ko="최신순" data-en="Latest">최신순</option>
