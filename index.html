@@ -72,13 +72,61 @@ body {
 }
 
 .nav-logo {
-  font-family: 'Anonymous Pro', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.95rem;
   color: var(--navy);
   cursor: pointer;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.nav-logo .brand-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.5px;
+}
+
+.nav-logo .brand-sub {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--muted2);
+  letter-spacing: 0.02em;
+}
+
+.nav-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lang-toggle span {
+  padding: 4px 8px;
+  color: var(--muted2);
+  transition: var(--transition);
+}
+
+.lang-toggle span.active {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.lang-toggle span:hover:not(.active) {
+  background: var(--light-bg);
 }
 
 .nav-menu {
@@ -797,6 +845,33 @@ body {
   line-height: 1.7;
 }
 
+.timeline-card .btn-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--muted3);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-icon-only:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--muted);
+  color: var(--white);
+}
+
 /* ===== BUTTONS ===== */
 .btn {
   display: inline-flex;
@@ -1046,6 +1121,7 @@ body {
   padding: 28px;
   transition: var(--transition);
   cursor: pointer;
+  position: relative;
 }
 
 .story-card:hover {
@@ -1679,6 +1755,28 @@ body {
   30% { transform: translateY(-6px); }
 }
 
+/* ===== DELETE BUTTON ===== */
+.story-delete-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(244,67,54,0.15);
+  border: 1px solid rgba(244,67,54,0.3);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.story-delete-btn:hover {
+  background: rgba(244,67,54,0.3);
+}
+
 /* ===== FOOTER ===== */
 .footer {
   background: var(--navy);
@@ -1782,19 +1880,28 @@ body {
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-container">
-    <div class="nav-logo" onclick="navigateTo('home')">buzzvil culture book</div>
-    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-logo" onclick="navigateTo('home')">
+      <span class="brand-name">Buzzvil</span>
+      <span class="brand-sub">Culture Book</span>
+    </div>
     <ul class="nav-menu" id="navMenu">
-      <li><a href="#home" onclick="closeMenu()">Home</a></li>
-      <li><a href="#core-values" onclick="closeMenu()">Core Values</a></li>
-      <li><a href="#history" onclick="closeMenu()">History</a></li>
-      <li><a href="#awards" onclick="closeMenu()">Awards</a></li>
-      <li><a href="#benefits" onclick="closeMenu()">Benefits</a></li>
-      <li><a href="#quiz" onclick="closeMenu()">Quiz</a></li>
-      <li><a href="#chat" onclick="closeMenu()">Chat</a></li>
+      <li><a href="#home" onclick="closeMenu()" data-ko="홈" data-en="Home">홈</a></li>
+      <li><a href="#core-values" onclick="closeMenu()" data-ko="핵심가치" data-en="Core Values">핵심가치</a></li>
+      <li><a href="#history" onclick="closeMenu()" data-ko="변천사" data-en="History">변천사</a></li>
+      <li><a href="#awards" onclick="closeMenu()" data-ko="버즈어워드" data-en="Buzz Awards">버즈어워드</a></li>
+      <li><a href="#benefits" onclick="closeMenu()" data-ko="복지제도" data-en="Benefits">복지제도</a></li>
+      <li><a href="#quiz" onclick="closeMenu()" data-ko="퀴즈" data-en="Quiz">퀴즈</a></li>
+      <li><a href="#chat" onclick="closeMenu()" data-ko="AI챗봇" data-en="AI Chatbot">AI챗봇</a></li>
     </ul>
+    <div class="nav-right-controls">
+      <div class="lang-toggle" id="langToggle">
+        <span id="langKo" class="active" onclick="setLanguage('ko')">KO</span>
+        <span id="langEn" onclick="setLanguage('en')">EN</span>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -1804,8 +1911,8 @@ body {
   <div class="hero">
     <div class="hero-content">
       <div class="hero-badge">Culture Book 5.0</div>
-      <h1>We boost our client growth<br>in a way people love.</h1>
-      <p>Buzzvil Culture Book 5.0 -- How we work, what we believe</p>
+      <h1 data-ko="사람들이 좋아하는 방식으로<br>고객의 성장을 촉진합니다." data-en="We boost our client growth<br>in a way people love.">사람들이 좋아하는 방식으로<br>고객의 성장을 촉진합니다.</h1>
+      <p data-ko="Buzzvil Culture Book 5.0 -- 우리가 일하는 방식, 우리가 믿는 가치" data-en="Buzzvil Culture Book 5.0 -- How we work, what we believe">Buzzvil Culture Book 5.0 -- 우리가 일하는 방식, 우리가 믿는 가치</p>
     </div>
     <div class="scroll-arrow" onclick="document.getElementById('home-values').scrollIntoView({behavior:'smooth'})">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
@@ -1816,48 +1923,48 @@ body {
 
   <!-- Core Values Quick Grid -->
   <div class="section" id="home-values">
-    <h2 class="section-title fade-in">Core Values</h2>
-    <p class="section-subtitle fade-in">4 core values shared by Buzzvillians</p>
+    <h2 class="section-title fade-in" data-ko="핵심가치" data-en="Core Values">핵심가치</h2>
+    <p class="section-subtitle fade-in" data-ko="버즈빌리언이 공유하는 4가지 핵심가치" data-en="4 core values shared by Buzzvillians">버즈빌리언이 공유하는 4가지 핵심가치</p>
     <div class="values-grid">
       <div class="value-card fade-in" onclick="navigateTo('core-values')">
         <div class="icon">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
         </div>
-        <h3>Responsible Autonomy</h3>
-        <p class="en-name">책임감 기반 자율</p>
-        <p class="desc">Choose for yourself, stand firm to the end</p>
+        <h3 data-ko="책임감 기반 자율" data-en="Responsible Autonomy">책임감 기반 자율</h3>
+        <p class="en-name" data-ko="Responsible Autonomy" data-en="책임감 기반 자율">Responsible Autonomy</p>
+        <p class="desc" data-ko="스스로 선택하고 끝까지 흔들리지 않는 사람" data-en="Choose for yourself, stand firm to the end">스스로 선택하고 끝까지 흔들리지 않는 사람</p>
       </div>
       <div class="value-card fade-in" onclick="navigateTo('core-values')">
         <div class="icon">
           <svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="4"/><polyline points="6 10 12 4 18 10"/></svg>
         </div>
-        <h3>Growth Mindset</h3>
-        <p class="en-name">성장 마인드셋</p>
-        <p class="desc">If you want to get better, we walk with you</p>
+        <h3 data-ko="성장 마인드셋" data-en="Growth Mindset">성장 마인드셋</h3>
+        <p class="en-name" data-ko="Growth Mindset" data-en="성장 마인드셋">Growth Mindset</p>
+        <p class="desc" data-ko="더 나아지고 싶다는 마음이 있다면 함께 한다" data-en="If you want to get better, we walk with you">더 나아지고 싶다는 마음이 있다면 함께 한다</p>
       </div>
       <div class="value-card fade-in" onclick="navigateTo('core-values')">
         <div class="icon">
           <svg viewBox="0 0 24 24"><path d="M12 2c1 3 4 5.5 4 8.5a4 4 0 1 1-8 0C8 7.5 11 5 12 2z"/></svg>
         </div>
-        <h3>Grit</h3>
-        <p class="en-name">불굴</p>
-        <p class="desc">The harder it gets, the further we push</p>
+        <h3 data-ko="불굴" data-en="Grit">불굴</h3>
+        <p class="en-name" data-ko="Grit" data-en="불굴">Grit</p>
+        <p class="desc" data-ko="어려울수록 멈추지 않는 사람" data-en="The harder it gets, the further we push">어려울수록 멈추지 않는 사람</p>
       </div>
       <div class="value-card fade-in" onclick="navigateTo('core-values')">
         <div class="icon">
           <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-        <h3>One Team</h3>
-        <p class="en-name">원팀</p>
-        <p class="desc">Building a future together that no one can build alone</p>
+        <h3 data-ko="원팀" data-en="One Team">원팀</h3>
+        <p class="en-name" data-ko="One Team" data-en="원팀">One Team</p>
+        <p class="desc" data-ko="혼자서는 만들 수 없는 미래를 함께 만든다" data-en="Building a future together that no one can build alone">혼자서는 만들 수 없는 미래를 함께 만든다</p>
       </div>
     </div>
   </div>
 
   <!-- Timeline Preview -->
   <div class="section">
-    <h2 class="section-title fade-in">Culture Book History</h2>
-    <p class="section-subtitle fade-in">Our cultural journey since 2015</p>
+    <h2 class="section-title fade-in" data-ko="컬쳐북 변천사" data-en="Culture Book History">컬쳐북 변천사</h2>
+    <p class="section-subtitle fade-in" data-ko="2015년부터 이어온 문화의 여정" data-en="Our cultural journey since 2015">2015년부터 이어온 문화의 여정</p>
     <div class="mini-timeline fade-in">
       <div class="mini-timeline-item">
         <div class="timeline-dot" onclick="navigateTo('history')">v1.0<span class="year">2015</span></div>
@@ -1883,36 +1990,36 @@ body {
 
   <!-- Features Grid -->
   <div class="section">
-    <h2 class="section-title fade-in">Explore More</h2>
-    <p class="section-subtitle fade-in">Discover the many facets of Buzzvil culture</p>
+    <h2 class="section-title fade-in" data-ko="더 알아보기" data-en="Explore More">더 알아보기</h2>
+    <p class="section-subtitle fade-in" data-ko="버즈빌 문화의 다양한 모습을 살펴보세요" data-en="Discover the many facets of Buzzvil culture">버즈빌 문화의 다양한 모습을 살펴보세요</p>
     <div class="features-grid">
       <a class="feature-card fade-in" href="#awards">
         <div class="feat-icon">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
         </div>
-        <h3>Buzz Awards</h3>
-        <p>Vote for stories that embody our values</p>
+        <h3 data-ko="버즈어워드" data-en="Buzz Awards">버즈어워드</h3>
+        <p data-ko="핵심가치를 실천한 사연에 투표하세요" data-en="Vote for stories that embody our values">핵심가치를 실천한 사연에 투표하세요</p>
       </a>
       <a class="feature-card fade-in" href="#benefits">
         <div class="feat-icon">
           <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V5a3 3 0 0 0-3-3h0a3 3 0 0 0-3 3v3"/><path d="M12 8V5a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v3"/><line x1="12" y1="8" x2="12" y2="20"/></svg>
         </div>
-        <h3>Benefits</h3>
-        <p>Perks and benefits for Buzzvillians</p>
+        <h3 data-ko="복지제도" data-en="Benefits">복지제도</h3>
+        <p data-ko="버즈빌리언을 위한 다양한 복지" data-en="Perks and benefits for Buzzvillians">버즈빌리언을 위한 다양한 복지</p>
       </a>
       <a class="feature-card fade-in" href="#quiz">
         <div class="feat-icon">
           <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-        <h3>Culture Quiz</h3>
-        <p>How well do you know Buzzvil?</p>
+        <h3 data-ko="컬쳐 퀴즈" data-en="Culture Quiz">컬쳐 퀴즈</h3>
+        <p data-ko="버즈빌 문화를 얼마나 알고 계신가요?" data-en="How well do you know Buzzvil?">버즈빌 문화를 얼마나 알고 계신가요?</p>
       </a>
       <a class="feature-card fade-in" href="#chat">
         <div class="feat-icon">
           <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         </div>
-        <h3>AI Chatbot</h3>
-        <p>Ask anything about our culture</p>
+        <h3 data-ko="AI 챗봇" data-en="AI Chatbot">AI 챗봇</h3>
+        <p data-ko="버즈빌 문화에 대해 물어보세요" data-en="Ask anything about our culture">버즈빌 문화에 대해 물어보세요</p>
       </a>
     </div>
   </div>
@@ -1926,8 +2033,8 @@ body {
     <div style="text-align:center; margin-bottom:16px;">
       <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
     </div>
-    <h2 class="section-title fade-in" style="text-align:center;">Core Values</h2>
-    <p class="section-subtitle fade-in" style="text-align:center;">The 4 core values that define Buzzvillians in Culture Book 5.0</p>
+    <h2 class="section-title fade-in" style="text-align:center;" data-ko="핵심가치" data-en="Core Values">핵심가치</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;" data-ko="Culture Book 5.0에서 정의하는 버즈빌리언의 4가지 핵심가치" data-en="The 4 core values that define Buzzvillians in Culture Book 5.0">Culture Book 5.0에서 정의하는 버즈빌리언의 4가지 핵심가치</p>
 
     <!-- 01 자율 -->
     <div class="value-detail fade-in">
@@ -2108,8 +2215,8 @@ body {
     <div style="text-align:center; margin-bottom:16px;">
       <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
     </div>
-    <h2 class="section-title fade-in" style="text-align:center;">Culture Book History</h2>
-    <p class="section-subtitle fade-in" style="text-align:center;">The evolution of Buzzvil culture from 2015 to today</p>
+    <h2 class="section-title fade-in" style="text-align:center;" data-ko="컬쳐북 변천사" data-en="Culture Book History">컬쳐북 변천사</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;" data-ko="2015년부터 이어온 버즈빌 문화의 여정" data-en="The evolution of Buzzvil culture from 2015 to today">2015년부터 이어온 버즈빌 문화의 여정</p>
 
     <div class="history-stats fade-in">
       <h3><span>10</span>년의 여정, <span>5</span>번의 진화</h3>
@@ -2130,10 +2237,15 @@ body {
           <span class="value-badge">Belief</span>
         </div>
         <p class="changes">실리콘밸리 진출 실패 후 조직문화의 중요성을 깨달으며 탄생. 5개의 핵심가치를 정의하고 "The Impossible Dream"을 테마곡으로 삼아 창업 초기의 열정과 비전을 담았습니다.</p>
-        <button class="btn btn-outline" onclick="openPdfModal('v1.0', 'https://drive.google.com/file/d/1EMaWVq0V2qTp7IhezGPmg8QZr6ZIPaoq/preview')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="openPdfModal('v1.0', 'https://drive.google.com/file/d/1EMaWVq0V2qTp7IhezGPmg8QZr6ZIPaoq/preview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </button>
+          <a class="btn-icon-only" href="https://drive.google.com/uc?export=download&id=1EMaWVq0V2qTp7IhezGPmg8QZr6ZIPaoq" target="_blank" title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- v2.0 -->
@@ -2148,10 +2260,15 @@ body {
           <span class="value-badge">Take the Initiative</span>
         </div>
         <p class="changes">핵심가치에 구체적인 행동 강령을 추가. 회의 그라운드 룰을 정비하고 "Outperform with Less" 슬로건 아래 효율적 업무 문화를 강조했습니다.</p>
-        <button class="btn btn-outline" onclick="openPdfModal('v2.0', 'https://drive.google.com/file/d/1J42fPwmHm5ODDWb7E35ZSilIcQ0M60qn/preview')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="openPdfModal('v2.0', 'https://drive.google.com/file/d/1J42fPwmHm5ODDWb7E35ZSilIcQ0M60qn/preview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </button>
+          <a class="btn-icon-only" href="https://drive.google.com/uc?export=download&id=1J42fPwmHm5ODDWb7E35ZSilIcQ0M60qn" target="_blank" title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- v3.0 -->
@@ -2166,10 +2283,15 @@ body {
           <span class="value-badge">구조화</span>
         </div>
         <p class="changes">컬쳐북 전면 리뉴얼. 모던 브랜딩으로 재디자인하고 한국어/영어 이중 언어를 지원. 글로벌 팀원들도 함께 공감할 수 있는 컬쳐북으로 발전했습니다.</p>
-        <button class="btn btn-outline" onclick="openPdfModal('v3.0', 'https://drive.google.com/file/d/1fDDQXwqGIE8QrUKcRq6I2q9B0-3CgQgQ/preview')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="openPdfModal('v3.0', 'https://drive.google.com/file/d/1fDDQXwqGIE8QrUKcRq6I2q9B0-3CgQgQ/preview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </button>
+          <a class="btn-icon-only" href="https://drive.google.com/uc?export=download&id=1fDDQXwqGIE8QrUKcRq6I2q9B0-3CgQgQ" target="_blank" title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- v4.0 -->
@@ -2185,10 +2307,15 @@ body {
           <span class="value-badge">고객중심 (Customer-centric)</span>
         </div>
         <p class="changes">창립 10주년을 맞아 미션을 새롭게 정립. 5개에서 4개로 핵심가치를 재정비하고, 실제 버즈빌리언 인터뷰를 수록하여 살아있는 컬쳐북을 만들었습니다.</p>
-        <button class="btn btn-outline" onclick="openPdfModal('v4.0', 'https://drive.google.com/file/d/1FI52z6AycrBwd0FB1U3-Kd40Ra_SoC8g/preview')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="openPdfModal('v4.0', 'https://drive.google.com/file/d/1FI52z6AycrBwd0FB1U3-Kd40Ra_SoC8g/preview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </button>
+          <a class="btn-icon-only" href="https://drive.google.com/uc?export=download&id=1FI52z6AycrBwd0FB1U3-Kd40Ra_SoC8g" target="_blank" title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- v5.0 -->
@@ -2204,16 +2331,21 @@ body {
           <span class="value-badge">원팀 (One Team) *evolved</span>
         </div>
         <p class="changes">'소통'이 '원팀'으로 진화하고, '고객중심'이 빠진 자리에 '불굴(Grit)'이 새롭게 추가되었습니다. CEO의 "유능함보다 끝까지 버티는 사람을 믿습니다"라는 메시지가 핵심 철학으로 자리잡았습니다.</p>
-        <button class="btn btn-outline" onclick="openPdfModal('v5.0', 'https://drive.google.com/file/d/1TDnGFCzdPZ1AeklgsxMVC4WYBgQY0fcN/preview')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="openPdfModal('v5.0', 'https://drive.google.com/file/d/1TDnGFCzdPZ1AeklgsxMVC4WYBgQY0fcN/preview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </button>
+          <a class="btn-icon-only" href="https://drive.google.com/uc?export=download&id=1TDnGFCzdPZ1AeklgsxMVC4WYBgQY0fcN" target="_blank" title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Version Comparison -->
     <div class="comparison-section fade-in">
-      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: var(--white);">Version Comparison</h3>
+      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: var(--white);" data-ko="버전 비교" data-en="Version Comparison">버전 비교</h3>
       <div class="comparison-selects">
         <select id="compareA" onchange="updateComparison()">
           <option value="1">v1.0 (2015)</option>
@@ -2242,8 +2374,8 @@ body {
     <div style="text-align:center; margin-bottom:16px;">
       <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
     </div>
-    <h2 class="section-title fade-in" style="text-align:center;">Buzz Awards</h2>
-    <p class="section-subtitle fade-in" style="text-align:center;">Vote for stories that embody our core values &mdash; we vote for stories, not people</p>
+    <h2 class="section-title fade-in" style="text-align:center;" data-ko="버즈어워드" data-en="Buzz Awards">버즈어워드</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;" data-ko="핵심가치를 실천한 사연에 투표하세요 &mdash; 사람이 아닌 이야기에 투표합니다" data-en="Vote for stories that embody our core values &mdash; we vote for stories, not people">핵심가치를 실천한 사연에 투표하세요 &mdash; 사람이 아닌 이야기에 투표합니다</p>
 
     <!-- Dashboard -->
     <div class="awards-dashboard fade-in" id="awardsDashboard"></div>
@@ -2251,15 +2383,15 @@ body {
     <!-- Filters -->
     <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;" class="fade-in">
       <div class="filter-tabs" id="awardFilterTabs" style="justify-content:center;">
-        <button class="filter-tab active" onclick="filterStories('전체')">All</button>
+        <button class="filter-tab active" onclick="filterStories('전체')" data-ko="전체" data-en="All">전체</button>
         <button class="filter-tab" onclick="filterStories('자율')">자율</button>
         <button class="filter-tab" onclick="filterStories('성장')">성장</button>
         <button class="filter-tab" onclick="filterStories('불굴')">불굴</button>
         <button class="filter-tab" onclick="filterStories('원팀')">원팀</button>
       </div>
       <select class="sort-select" id="awardSort" onchange="sortStories()">
-        <option value="latest">Latest</option>
-        <option value="votes">Most Votes</option>
+        <option value="latest" data-ko="최신순" data-en="Latest">최신순</option>
+        <option value="votes" data-ko="투표순" data-en="Most Votes">투표순</option>
       </select>
     </div>
 
@@ -2271,13 +2403,13 @@ body {
 
     <!-- Submit Form -->
     <div class="form-card fade-in">
-      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:20px; color:var(--navy);">Submit a Story</h3>
+      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:20px; color:var(--white);" data-ko="사연 등록" data-en="Submit a Story">사연 등록</h3>
       <div class="form-group">
-        <label style="color:var(--white);">Nominee</label>
-        <input type="text" id="storyNominee" placeholder="Who demonstrated our values?">
+        <label style="color:var(--white);" data-ko="추천 대상" data-en="Nominee">추천 대상</label>
+        <input type="text" id="storyNominee" placeholder="핵심가치를 실천한 사람은 누구인가요?" data-placeholder-ko="핵심가치를 실천한 사람은 누구인가요?" data-placeholder-en="Who demonstrated our values?">
       </div>
       <div class="form-group">
-        <label style="color:var(--white);">Core Value</label>
+        <label style="color:var(--white);" data-ko="핵심가치" data-en="Core Value">핵심가치</label>
         <select id="storyValue">
           <option value="자율">자율 (Autonomy)</option>
           <option value="성장">성장 (Growth)</option>
@@ -2286,18 +2418,18 @@ body {
         </select>
       </div>
       <div class="form-group">
-        <label style="color:var(--white);">Title</label>
-        <input type="text" id="storyTitle" placeholder="Give your story a title">
+        <label style="color:var(--white);" data-ko="제목" data-en="Title">제목</label>
+        <input type="text" id="storyTitle" placeholder="사연 제목을 입력하세요" data-placeholder-ko="사연 제목을 입력하세요" data-placeholder-en="Give your story a title">
       </div>
       <div class="form-group">
-        <label style="color:var(--white);">Story</label>
-        <textarea id="storyContent" placeholder="Tell us what happened..."></textarea>
+        <label style="color:var(--white);" data-ko="내용" data-en="Story">내용</label>
+        <textarea id="storyContent" placeholder="어떤 일이 있었는지 알려주세요..." data-placeholder-ko="어떤 일이 있었는지 알려주세요..." data-placeholder-en="Tell us what happened..."></textarea>
       </div>
       <div class="form-group">
-        <label style="color:var(--white);">Your Name (optional)</label>
-        <input type="text" id="storyAuthor" placeholder="Anonymous if blank">
+        <label style="color:var(--white);" data-ko="작성자 (선택)" data-en="Your Name (optional)">작성자 (선택)</label>
+        <input type="text" id="storyAuthor" placeholder="미입력 시 익명" data-placeholder-ko="미입력 시 익명" data-placeholder-en="Anonymous if blank">
       </div>
-      <button class="btn btn-primary-light" onclick="submitStory()">Submit Story</button>
+      <button class="btn btn-primary-light" onclick="submitStory()" data-ko="등록하기" data-en="Submit Story">등록하기</button>
     </div>
   </div>
 </div>
@@ -2308,8 +2440,8 @@ body {
     <div style="text-align:center; margin-bottom:16px;">
       <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
     </div>
-    <h2 class="section-title fade-in" style="text-align:center;">Benefits</h2>
-    <p class="section-subtitle fade-in" style="text-align:center;">Benefits for Buzzvillians, connected to our core values</p>
+    <h2 class="section-title fade-in" style="text-align:center;" data-ko="복지제도" data-en="Benefits">복지제도</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;" data-ko="핵심가치와 연결된 버즈빌리언을 위한 복지" data-en="Benefits for Buzzvillians, connected to our core values">핵심가치와 연결된 버즈빌리언을 위한 복지</p>
 
     <div class="benefits-tabs fade-in" style="justify-content:center;">
       <button class="benefit-tab active" style="background:var(--white); color:var(--navy); border-color:var(--white);" onclick="filterBenefits('전체', this)">전체</button>
@@ -2323,18 +2455,18 @@ body {
 
     <!-- Suggestion Form -->
     <div class="form-card fade-in" style="margin-top:48px;">
-      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:20px; color:var(--navy);">Suggest a Benefit</h3>
+      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:20px; color:var(--white);" data-ko="복지 제안" data-en="Suggest a Benefit">복지 제안</h3>
       <form onsubmit="submitSuggestion(event)">
         <div class="form-group">
-          <label style="color:var(--white);">Name</label>
-          <input type="text" id="suggestName" placeholder="Your name" required>
+          <label style="color:var(--white);" data-ko="이름" data-en="Name">이름</label>
+          <input type="text" id="suggestName" placeholder="이름을 입력하세요" data-placeholder-ko="이름을 입력하세요" data-placeholder-en="Your name" required>
         </div>
         <div class="form-group">
-          <label style="color:var(--white);">Email</label>
+          <label style="color:var(--white);" data-ko="이메일" data-en="Email">이메일</label>
           <input type="email" id="suggestEmail" placeholder="your@email.com" required>
         </div>
         <div class="form-group">
-          <label style="color:var(--white);">Related Core Value</label>
+          <label style="color:var(--white);" data-ko="관련 핵심가치" data-en="Related Core Value">관련 핵심가치</label>
           <select id="suggestValue">
             <option value="자율">자율</option>
             <option value="성장">성장</option>
@@ -2343,14 +2475,14 @@ body {
           </select>
         </div>
         <div class="form-group">
-          <label style="color:var(--white);">Benefit Title</label>
-          <input type="text" id="suggestTitle" placeholder="Suggested benefit name" required>
+          <label style="color:var(--white);" data-ko="제안 제목" data-en="Benefit Title">제안 제목</label>
+          <input type="text" id="suggestTitle" placeholder="제안하고 싶은 복지 이름" data-placeholder-ko="제안하고 싶은 복지 이름" data-placeholder-en="Suggested benefit name" required>
         </div>
         <div class="form-group">
-          <label style="color:var(--white);">Description</label>
-          <textarea id="suggestContent" placeholder="Describe your suggestion..." required></textarea>
+          <label style="color:var(--white);" data-ko="내용" data-en="Description">내용</label>
+          <textarea id="suggestContent" placeholder="제안 내용을 설명해주세요..." data-placeholder-ko="제안 내용을 설명해주세요..." data-placeholder-en="Describe your suggestion..." required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary-light">Send Suggestion</button>
+        <button type="submit" class="btn btn-primary-light" data-ko="제안 보내기" data-en="Send Suggestion">제안 보내기</button>
       </form>
     </div>
   </div>
@@ -2363,9 +2495,9 @@ body {
     <div class="quiz-container" style="position:relative; z-index:1;">
       <div id="quizStart" class="quiz-start">
         <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
-        <h2>Culture Quiz</h2>
-        <p>Test your knowledge of Buzzvil culture!<br>10 random questions from 30+ questions.</p>
-        <button class="btn btn-accent" onclick="startQuiz()">Start Quiz</button>
+        <h2 data-ko="컬쳐 퀴즈" data-en="Culture Quiz">컬쳐 퀴즈</h2>
+        <p data-ko="버즈빌 문화를 얼마나 알고 계신가요?<br>30개 이상의 문제 중 10개가 랜덤 출제됩니다." data-en="Test your knowledge of Buzzvil culture!<br>10 random questions from 30+ questions.">버즈빌 문화를 얼마나 알고 계신가요?<br>30개 이상의 문제 중 10개가 랜덤 출제됩니다.</p>
+        <button class="btn btn-accent" onclick="startQuiz()" data-ko="퀴즈 시작" data-en="Start Quiz">퀴즈 시작</button>
       </div>
       <div id="quizArea" style="display:none;"></div>
       <div id="quizResult" style="display:none;"></div>
@@ -2378,13 +2510,13 @@ body {
   <div class="chat-container">
     <div class="chat-header">
       <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
-      <h2 class="section-title" style="text-align:center;">AI Culture Chatbot</h2>
-      <p class="section-subtitle" style="margin-bottom:16px; text-align:center;">Ask anything about Buzzvil culture</p>
+      <h2 class="section-title" style="text-align:center;" data-ko="AI 컬쳐 챗봇" data-en="AI Culture Chatbot">AI 컬쳐 챗봇</h2>
+      <p class="section-subtitle" style="margin-bottom:16px; text-align:center;" data-ko="버즈빌 문화에 대해 무엇이든 물어보세요" data-en="Ask anything about Buzzvil culture">버즈빌 문화에 대해 무엇이든 물어보세요</p>
     </div>
 
     <!-- Input at TOP -->
     <div class="chat-input-area">
-      <input type="text" id="chatInput" placeholder="Ask about our culture..." onkeypress="if(event.key==='Enter')sendChat()">
+      <input type="text" id="chatInput" placeholder="메시지를 입력하세요..." data-placeholder-ko="메시지를 입력하세요..." data-placeholder-en="Ask about our culture..." onkeypress="if(event.key==='Enter')sendChat()">
       <button class="chat-send-btn" onclick="sendChat()">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
@@ -2392,17 +2524,17 @@ body {
 
     <!-- Suggested chips below input -->
     <div class="suggested-chips">
-      <button class="chip" onclick="sendChat('핵심가치가 뭐야?')">Core Values</button>
-      <button class="chip" onclick="sendChat('자율이 뭐야?')">Autonomy</button>
-      <button class="chip" onclick="sendChat('불굴이 뭐야?')">Grit</button>
-      <button class="chip" onclick="sendChat('복지 알려줘')">Benefits</button>
-      <button class="chip" onclick="sendChat('컬쳐북 역사')">History</button>
-      <button class="chip" onclick="sendChat('미션이 뭐야?')">Mission</button>
+      <button class="chip" onclick="sendChat('핵심가치가 뭐야?')" data-ko="핵심가치" data-en="Core Values">핵심가치</button>
+      <button class="chip" onclick="sendChat('자율이 뭐야?')" data-ko="자율" data-en="Autonomy">자율</button>
+      <button class="chip" onclick="sendChat('불굴이 뭐야?')" data-ko="불굴" data-en="Grit">불굴</button>
+      <button class="chip" onclick="sendChat('복지 알려줘')" data-ko="복지" data-en="Benefits">복지</button>
+      <button class="chip" onclick="sendChat('컬쳐북 역사')" data-ko="변천사" data-en="History">변천사</button>
+      <button class="chip" onclick="sendChat('미션이 뭐야?')" data-ko="미션" data-en="Mission">미션</button>
     </div>
 
     <!-- Chat messages below -->
     <div class="chat-messages" id="chatMessages">
-      <div class="chat-bubble bot">Welcome! I'm the Buzzvil Culture Chatbot. Ask me about our core values, benefits, history, or anything about our culture!</div>
+      <div class="chat-bubble bot" data-ko="안녕하세요! 버즈빌 컬쳐 챗봇입니다. 핵심가치, 복지, 변천사 등 버즈빌 문화에 대해 무엇이든 물어보세요!" data-en="Welcome! I'm the Buzzvil Culture Chatbot. Ask me about our core values, benefits, history, or anything about our culture!">안녕하세요! 버즈빌 컬쳐 챗봇입니다. 핵심가치, 복지, 변천사 등 버즈빌 문화에 대해 무엇이든 물어보세요!</div>
     </div>
     <div class="typing-indicator" id="typingIndicator">
       <span></span><span></span><span></span>
@@ -2414,15 +2546,15 @@ body {
 <footer class="footer">
   <p class="footer-mission">We boost our client growth in a way people love.</p>
   <div class="footer-links">
-    <a href="#home">Home</a>
-    <a href="#core-values">Core Values</a>
-    <a href="#history">History</a>
-    <a href="#awards">Awards</a>
-    <a href="#benefits">Benefits</a>
-    <a href="#quiz">Quiz</a>
-    <a href="#chat">Chat</a>
+    <a href="#home" data-ko="홈" data-en="Home">홈</a>
+    <a href="#core-values" data-ko="핵심가치" data-en="Core Values">핵심가치</a>
+    <a href="#history" data-ko="변천사" data-en="History">변천사</a>
+    <a href="#awards" data-ko="버즈어워드" data-en="Awards">버즈어워드</a>
+    <a href="#benefits" data-ko="복지제도" data-en="Benefits">복지제도</a>
+    <a href="#quiz" data-ko="퀴즈" data-en="Quiz">퀴즈</a>
+    <a href="#chat" data-ko="AI챗봇" data-en="Chat">AI챗봇</a>
   </div>
-  <p class="copyright">&copy; 2024 Buzzvil. All rights reserved.</p>
+  <p class="copyright" data-ko="&copy; 2024 Buzzvil. All rights reserved." data-en="&copy; 2024 Buzzvil. All rights reserved.">&copy; 2024 Buzzvil. All rights reserved.</p>
 </footer>
 
 <!-- PDF Modal -->
@@ -2439,6 +2571,40 @@ body {
 </div>
 
 <script>
+// ===== i18n =====
+let currentLang = localStorage.getItem('buzzvilLang') || 'ko';
+
+function t(ko, en) {
+  return currentLang === 'ko' ? ko : en;
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('buzzvilLang', lang);
+
+  // Update toggle UI
+  document.getElementById('langKo').classList.toggle('active', lang === 'ko');
+  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+
+  // Update all elements with data-ko/data-en
+  document.querySelectorAll('[data-ko]').forEach(el => {
+    if (el.getAttribute('data-' + lang) !== null) {
+      el.innerHTML = el.getAttribute('data-' + lang);
+    }
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-placeholder-ko]').forEach(el => {
+    const val = el.getAttribute('data-placeholder-' + lang);
+    if (val) el.placeholder = val;
+  });
+
+  // Re-render dynamic content
+  renderBenefits(document.querySelector('.benefit-tab.active') ? document.querySelector('.benefit-tab.active').textContent.trim() : '전체');
+  renderStories();
+  renderAwardsDashboard();
+}
+
 // ===== DATA =====
 
 const versionData = {
@@ -2450,36 +2616,36 @@ const versionData = {
 };
 
 const benefitsData = [
-  { category: '자율', emoji: '🏖️', name: '버즈 홀리데이', badge: '자율', summary: '연 2일 특별휴가', details: '버즈빌리언의 자율적인 삶을 응원합니다. 연차와 별도로 매년 2일의 특별휴가가 제공됩니다. 자유롭게 원하는 때에 사용할 수 있습니다.', color: 'var(--autonomy)' },
-  { category: '자율', emoji: '⏰', name: '시간단위 연차', badge: '자율', summary: '1시간 단위로 연차 사용 가능', details: '반차, 반반차를 넘어 1시간 단위로 연차를 사용할 수 있습니다. 병원 방문, 개인 용무 등 필요한 만큼만 사용하세요.', color: 'var(--autonomy)' },
-  { category: '성장', emoji: '📚', name: '자기계발비', badge: '성장', summary: '분기 30만원 지원', details: '분기마다 30만원의 자기계발비가 지원됩니다. 온라인 강의, 자격증, 세미나 참가 등 성장을 위한 다양한 활동에 사용할 수 있습니다.', color: 'var(--growth)' },
-  { category: '성장', emoji: '📖', name: '도서구매', badge: '성장', summary: '무제한 도서 구매 지원', details: '업무 관련 도서뿐 아니라 자기계발, 교양 도서도 무제한으로 구매할 수 있습니다. 독서를 통한 성장을 적극 지원합니다.', color: 'var(--growth)' },
-  { category: '성장', emoji: '👥', name: '스터디그룹 지원', badge: '성장', summary: '스터디그룹 활동비 지원', details: '사내 스터디그룹을 구성하면 활동비를 지원합니다. 함께 공부하며 성장하는 문화를 만들어갑니다.', color: 'var(--growth)' },
-  { category: '성장', emoji: '🎓', name: '외부교육비', badge: '성장', summary: '외부 교육 참가비 지원', details: '컨퍼런스, 워크샵, 교육 프로그램 참가비를 지원합니다. 업계 최신 트렌드를 배우고 네트워크를 확장하세요.', color: 'var(--growth)' },
-  { category: '성장', emoji: '🗣️', name: '한국어교육', badge: '성장', summary: '외국인 직원 한국어 교육 지원', details: '글로벌 팀원들의 한국 생활 적응과 업무 소통을 위해 한국어 교육을 지원합니다.', color: 'var(--growth)' },
-  { category: '성장', emoji: '💻', name: '버즈챌린지', badge: '성장', summary: '사내 해커톤', details: '정기적으로 사내 해커톤인 버즈챌린지를 개최합니다. 새로운 아이디어를 실험하고, 팀 간 협업을 통해 혁신적인 프로젝트를 만들어보세요.', color: 'var(--growth)' },
-  { category: '성장', emoji: '🎉', name: '장기재직자 축하금', badge: '성장', summary: '장기 근속 축하 혜택', details: '장기간 함께해온 버즈빌리언에게 축하금과 특별 혜택을 제공합니다. 오래 함께할수록 더 큰 보상이 기다립니다.', color: 'var(--growth)' },
-  { category: '성장', emoji: '✨', name: '브랜딩 리워드', badge: '성장', summary: '개인 브랜딩 활동 보상', details: '블로그 포스팅, 외부 발표, 오픈소스 기여 등 개인 브랜딩 활동에 대한 리워드를 제공합니다.', color: 'var(--growth)' },
-  { category: '불굴', emoji: '🏥', name: '종합검진', badge: '건강', summary: '연 1회 종합 건강검진', details: '매년 1회 종합 건강검진을 지원합니다. 건강한 몸에서 건강한 정신이, 건강한 정신에서 불굴의 의지가 나옵니다.', color: 'var(--grit)' },
-  { category: '불굴', emoji: '🛡️', name: '단체상해보험', badge: '건강', summary: '단체 상해보험 가입', details: '버즈빌리언 전원 단체상해보험에 가입되어 있습니다. 만약의 상황에도 안심하고 일에 집중할 수 있습니다.', color: 'var(--grit)' },
-  { category: '불굴', emoji: '🤝', name: '외부제휴서비스', badge: '건강', summary: '다양한 외부 제휴 혜택', details: '헬스장, 요가, 심리상담 등 다양한 외부 제휴 서비스를 할인된 가격으로 이용할 수 있습니다.', color: 'var(--grit)' },
-  { category: '원팀', emoji: '🎸', name: '동호회 지원', badge: '소통', summary: '동호회 활동비 지원', details: '사내 동호회 활동비를 지원합니다. 운동, 음악, 취미 등 다양한 동호회에서 팀원들과 함께하세요.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '🍽️', name: '회식비', badge: '소통', summary: '팀 회식비 지원', details: '팀 단위 회식비를 지원합니다. 맛있는 식사와 함께 팀워크를 강화하세요.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '👨‍💼', name: '리드활동비', badge: '소통', summary: '팀 리드 활동비 지원', details: '팀 리드에게 별도의 활동비를 지원합니다. 팀원들과의 1:1 미팅, 팀 빌딩 활동 등에 활용하세요.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '🍱', name: '식대 지원', badge: '소통', summary: '점심 식대 지원', details: '매일 점심 식대를 지원합니다. 함께 식사하며 소통하는 시간을 만들어보세요.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '🤰', name: '임신선물', badge: '소통', summary: '임신 축하 선물', details: '임신한 버즈빌리언에게 축하 선물을 드립니다. 새 생명의 시작을 함께 축하합니다.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '🎂', name: '생일축하', badge: '소통', summary: '생일 축하 혜택', details: '생일을 맞은 버즈빌리언에게 축하 메시지와 선물을 드립니다. 소중한 날을 함께 축하합니다.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '🎓', name: '졸업축하', badge: '소통', summary: '졸업 축하금', details: '대학원 등 학위 과정을 졸업한 버즈빌리언에게 축하금을 드립니다.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '👶', name: '자녀축하', badge: '소통', summary: '자녀 출산/입학 축하', details: '자녀의 출산, 입학 등 경사에 축하금을 드립니다. 가정의 기쁜 순간을 함께 나눕니다.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '👋', name: '퇴사선물', badge: '소통', summary: '퇴사 시 감사 선물', details: '함께한 시간에 감사하며 퇴사하는 버즈빌리언에게 감사 선물을 드립니다. 새로운 여정을 응원합니다.', color: 'var(--oneteam)' },
-  { category: '원팀', emoji: '💐', name: '경조사 지원', badge: '소통', summary: '경조사비 및 화환 지원', details: '결혼, 상(喪) 등 경조사에 경조사비와 화환을 지원합니다. 기쁜 일도 슬픈 일도 함께합니다.', color: 'var(--oneteam)' }
+  { category: '자율', emoji: '', name: '버즈 홀리데이', badge: '자율', summary: '연 2일 특별휴가', details: '버즈빌리언의 자율적인 삶을 응원합니다. 연차와 별도로 매년 2일의 특별휴가가 제공됩니다. 자유롭게 원하는 때에 사용할 수 있습니다.', color: 'var(--autonomy)' },
+  { category: '자율', emoji: '', name: '시간단위 연차', badge: '자율', summary: '1시간 단위로 연차 사용 가능', details: '반차, 반반차를 넘어 1시간 단위로 연차를 사용할 수 있습니다. 병원 방문, 개인 용무 등 필요한 만큼만 사용하세요.', color: 'var(--autonomy)' },
+  { category: '성장', emoji: '', name: '자기계발비', badge: '성장', summary: '분기 30만원 지원', details: '분기마다 30만원의 자기계발비가 지원됩니다. 온라인 강의, 자격증, 세미나 참가 등 성장을 위한 다양한 활동에 사용할 수 있습니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '도서구매', badge: '성장', summary: '무제한 도서 구매 지원', details: '업무 관련 도서뿐 아니라 자기계발, 교양 도서도 무제한으로 구매할 수 있습니다. 독서를 통한 성장을 적극 지원합니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '스터디그룹 지원', badge: '성장', summary: '스터디그룹 활동비 지원', details: '사내 스터디그룹을 구성하면 활동비를 지원합니다. 함께 공부하며 성장하는 문화를 만들어갑니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '외부교육비', badge: '성장', summary: '외부 교육 참가비 지원', details: '컨퍼런스, 워크샵, 교육 프로그램 참가비를 지원합니다. 업계 최신 트렌드를 배우고 네트워크를 확장하세요.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '한국어교육', badge: '성장', summary: '외국인 직원 한국어 교육 지원', details: '글로벌 팀원들의 한국 생활 적응과 업무 소통을 위해 한국어 교육을 지원합니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '버즈챌린지', badge: '성장', summary: '사내 해커톤', details: '정기적으로 사내 해커톤인 버즈챌린지를 개최합니다. 새로운 아이디어를 실험하고, 팀 간 협업을 통해 혁신적인 프로젝트를 만들어보세요.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '장기재직자 축하금', badge: '성장', summary: '장기 근속 축하 혜택', details: '장기간 함께해온 버즈빌리언에게 축하금과 특별 혜택을 제공합니다. 오래 함께할수록 더 큰 보상이 기다립니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '', name: '브랜딩 리워드', badge: '성장', summary: '개인 브랜딩 활동 보상', details: '블로그 포스팅, 외부 발표, 오픈소스 기여 등 개인 브랜딩 활동에 대한 리워드를 제공합니다.', color: 'var(--growth)' },
+  { category: '불굴', emoji: '', name: '종합검진', badge: '건강', summary: '연 1회 종합 건강검진', details: '매년 1회 종합 건강검진을 지원합니다. 건강한 몸에서 건강한 정신이, 건강한 정신에서 불굴의 의지가 나옵니다.', color: 'var(--grit)' },
+  { category: '불굴', emoji: '', name: '단체상해보험', badge: '건강', summary: '단체 상해보험 가입', details: '버즈빌리언 전원 단체상해보험에 가입되어 있습니다. 만약의 상황에도 안심하고 일에 집중할 수 있습니다.', color: 'var(--grit)' },
+  { category: '불굴', emoji: '', name: '외부제휴서비스', badge: '건강', summary: '다양한 외부 제휴 혜택', details: '헬스장, 요가, 심리상담 등 다양한 외부 제휴 서비스를 할인된 가격으로 이용할 수 있습니다.', color: 'var(--grit)' },
+  { category: '원팀', emoji: '', name: '동호회 지원', badge: '소통', summary: '동호회 활동비 지원', details: '사내 동호회 활동비를 지원합니다. 운동, 음악, 취미 등 다양한 동호회에서 팀원들과 함께하세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '회식비', badge: '소통', summary: '팀 회식비 지원', details: '팀 단위 회식비를 지원합니다. 맛있는 식사와 함께 팀워크를 강화하세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '리드활동비', badge: '소통', summary: '팀 리드 활동비 지원', details: '팀 리드에게 별도의 활동비를 지원합니다. 팀원들과의 1:1 미팅, 팀 빌딩 활동 등에 활용하세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '식대 지원', badge: '소통', summary: '점심 식대 지원', details: '매일 점심 식대를 지원합니다. 함께 식사하며 소통하는 시간을 만들어보세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '임신선물', badge: '소통', summary: '임신 축하 선물', details: '임신한 버즈빌리언에게 축하 선물을 드립니다. 새 생명의 시작을 함께 축하합니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '생일축하', badge: '소통', summary: '생일 축하 혜택', details: '생일을 맞은 버즈빌리언에게 축하 메시지와 선물을 드립니다. 소중한 날을 함께 축하합니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '졸업축하', badge: '소통', summary: '졸업 축하금', details: '대학원 등 학위 과정을 졸업한 버즈빌리언에게 축하금을 드립니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '자녀축하', badge: '소통', summary: '자녀 출산/입학 축하', details: '자녀의 출산, 입학 등 경사에 축하금을 드립니다. 가정의 기쁜 순간을 함께 나눕니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '퇴사선물', badge: '소통', summary: '퇴사 시 감사 선물', details: '함께한 시간에 감사하며 퇴사하는 버즈빌리언에게 감사 선물을 드립니다. 새로운 여정을 응원합니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '', name: '경조사 지원', badge: '소통', summary: '경조사비 및 화환 지원', details: '결혼, 상(喪) 등 경조사에 경조사비와 화환을 지원합니다. 기쁜 일도 슬픈 일도 함께합니다.', color: 'var(--oneteam)' }
 ];
 
 const sampleStories = [
-  { id: 1, value: '불굴', title: '3개월간의 시스템 마이그레이션 도전기', preview: '레거시 시스템 마이그레이션 프로젝트에서 수차례 실패에도 불구하고 포기하지 않고 끝내 성공시킨 이야기. 매일 새벽까지 원인을 분석하고, 팀원들과 함께 하나씩 문제를 해결해나갔습니다.', nominator: '김민수', nominee: '이서진', votes: 24, rating: 4.5, date: '2024-11-15', comments: ['정말 대단한 끈기!', '불굴의 정신 그 자체'] },
-  { id: 2, value: '원팀', title: '부서 간 벽을 허문 크로스펑셔널 프로젝트', preview: '마케팅, 개발, 디자인팀이 2주간 한 공간에서 함께 일하며 신규 광고 상품을 론칭한 사례. 각자의 전문성을 살리면서도 하나의 목표를 향해 달려간 원팀 정신의 모범 사례입니다.', nominator: '박지현', nominee: '프로덕트팀', votes: 31, rating: 4.8, date: '2024-11-20', comments: ['이래서 원팀이구나!', '부서 이기주의를 넘은 멋진 사례'] },
-  { id: 3, value: '성장', title: '비전공자에서 풀스택 개발자로', preview: '마케팅팀 출신으로 개발에 관심을 갖고, 자기계발비와 도서구매 지원을 활용해 독학으로 개발을 배운 뒤 실제 사내 툴을 개발한 감동적인 성장 스토리.', nominator: '최영호', nominee: '한소희', votes: 28, rating: 4.6, date: '2024-12-01', comments: ['성장 마인드셋의 정석!', '버즈빌이기에 가능한 이야기'] },
-  { id: 4, value: '자율', title: '스스로 발견한 비효율, 스스로 해결한 프로세스', preview: '아무도 시키지 않았지만 매주 3시간씩 낭비되던 보고 프로세스를 발견하고, 자동화 스크립트를 만들어 전사 업무 효율을 크게 높인 이야기. 책임감 기반 자율의 좋은 예시입니다.', nominator: '익명', nominee: '정다은', votes: 19, rating: 4.3, date: '2024-12-05', comments: ['이런 게 진짜 자율이지!'] }
+  { id: 1, value: '불굴', title: '3개월간의 시스템 마이그레이션 도전기', preview: '레거시 시스템 마이그레이션 프로젝트에서 수차례 실패에도 불구하고 포기하지 않고 끝내 성공시킨 이야기. 매일 새벽까지 원인을 분석하고, 팀원들과 함께 하나씩 문제를 해결해나갔습니다.', nominator: '김민수', nominee: '이서진', votes: 24, rating: 4.5, date: '2024-11-15', comments: ['정말 대단한 끈기!', '불굴의 정신 그 자체'], deleteToken: null },
+  { id: 2, value: '원팀', title: '부서 간 벽을 허문 크로스펑셔널 프로젝트', preview: '마케팅, 개발, 디자인팀이 2주간 한 공간에서 함께 일하며 신규 광고 상품을 론칭한 사례. 각자의 전문성을 살리면서도 하나의 목표를 향해 달려간 원팀 정신의 모범 사례입니다.', nominator: '박지현', nominee: '프로덕트팀', votes: 31, rating: 4.8, date: '2024-11-20', comments: ['이래서 원팀이구나!', '부서 이기주의를 넘은 멋진 사례'], deleteToken: null },
+  { id: 3, value: '성장', title: '비전공자에서 풀스택 개발자로', preview: '마케팅팀 출신으로 개발에 관심을 갖고, 자기계발비와 도서구매 지원을 활용해 독학으로 개발을 배운 뒤 실제 사내 툴을 개발한 감동적인 성장 스토리.', nominator: '최영호', nominee: '한소희', votes: 28, rating: 4.6, date: '2024-12-01', comments: ['성장 마인드셋의 정석!', '버즈빌이기에 가능한 이야기'], deleteToken: null },
+  { id: 4, value: '자율', title: '스스로 발견한 비효율, 스스로 해결한 프로세스', preview: '아무도 시키지 않았지만 매주 3시간씩 낭비되던 보고 프로세스를 발견하고, 자동화 스크립트를 만들어 전사 업무 효율을 크게 높인 이야기. 책임감 기반 자율의 좋은 예시입니다.', nominator: '익명', nominee: '정다은', votes: 19, rating: 4.3, date: '2024-12-05', comments: ['이런 게 진짜 자율이지!'], deleteToken: null }
 ];
 
 const quizQuestions = [
@@ -2502,7 +2668,6 @@ const quizQuestions = [
   { q: '"책임감 기반 자율"의 영문명은?', a: 'Responsible Autonomy', options: ['Free Autonomy', 'Responsible Autonomy', 'Self-directed Freedom', 'Autonomous Leadership'], cat: 'core-values' },
   { q: '4.0에는 있었지만 5.0에서 빠진 핵심가치는?', a: '고객중심', options: ['소통', '성장', '고객중심', '자율'], cat: 'core-values' },
   { q: '종합검진은 몇 회 지원되나?', a: '연 1회', options: ['분기 1회', '연 1회', '연 2회', '격년 1회'], cat: 'benefits' },
-  { q: '핵심가치 "원팀"의 색상은?', a: '퍼플 (Purple)', options: ['블루', '틸', '오렌지', '퍼플 (Purple)'], cat: 'core-values' },
   { q: '컬쳐북이 처음 만들어진 해는?', a: '2015년', options: ['2012년', '2013년', '2015년', '2017년'], cat: 'history' },
   { q: '성장 마인드셋의 정의에 해당하는 것은?', a: '더 나아지고 싶다는 마음이 있다면 함께 한다', options: ['최고만을 추구한다', '더 나아지고 싶다는 마음이 있다면 함께 한다', '실패를 허용하지 않는다', '경쟁에서 이기는 것이 성장이다'], cat: 'core-values' },
   { q: '불굴의 정의에 해당하는 것은?', a: '어려울수록 멈추지 않는 사람', options: ['혼자서 모든 것을 해내는 사람', '가장 유능한 사람', '어려울수록 멈추지 않는 사람', '빠르게 방향을 전환하는 사람'], cat: 'core-values' },
@@ -2511,8 +2676,7 @@ const quizQuestions = [
   { q: '버즈빌 컬쳐북은 총 몇 번 개정되었나?', a: '4번 (v1.0→v5.0)', options: ['2번', '3번', '4번 (v1.0→v5.0)', '5번'], cat: 'history' },
   { q: '4.0 컬쳐북에 포함된 특별한 콘텐츠는?', a: '버즈빌리언 인터뷰', options: ['CEO 자서전', '버즈빌리언 인터뷰', '경쟁사 분석', '재무 보고서'], cat: 'history' },
   { q: '다음 중 "원팀" 관련 복지가 아닌 것은?', a: '자기계발비', options: ['동호회 지원', '회식비', '자기계발비', '생일축하'], cat: 'benefits' },
-  { q: '2.0에서 새로 도입된 행동 지침이 아닌 것은?', a: 'Move Fast', options: ['JGID', 'Be Bold', 'Take the Initiative', 'Move Fast'], cat: 'history' },
-  { q: '핵심가치 "자율"의 색상은?', a: '블루 (#2E75B6)', options: ['블루 (#2E75B6)', '틸', '오렌지', '퍼플'], cat: 'core-values' }
+  { q: '2.0에서 새로 도입된 행동 지침이 아닌 것은?', a: 'Move Fast', options: ['JGID', 'Be Bold', 'Take the Initiative', 'Move Fast'], cat: 'history' }
 ];
 
 const sampleWallMessages = [
@@ -2565,6 +2729,15 @@ window.addEventListener('DOMContentLoaded', () => {
   updateComparison();
   renderAwardsDashboard();
   setupScrollObserver();
+
+  // Apply saved language
+  if (currentLang !== 'ko') {
+    setLanguage(currentLang);
+  } else {
+    // Ensure toggle UI matches
+    document.getElementById('langKo').classList.add('active');
+    document.getElementById('langEn').classList.remove('active');
+  }
 
   // Navbar scroll
   window.addEventListener('scroll', () => {
@@ -2624,6 +2797,34 @@ function saveWall() {
   localStorage.setItem('buzzvilWall', JSON.stringify(wallMessages));
 }
 
+// ===== DELETE TOKEN HELPERS =====
+function getDeleteTokens() {
+  const saved = localStorage.getItem('buzzvilDeleteTokens');
+  return saved ? JSON.parse(saved) : {};
+}
+
+function saveDeleteToken(storyId, token) {
+  const tokens = getDeleteTokens();
+  tokens[storyId] = token;
+  localStorage.setItem('buzzvilDeleteTokens', JSON.stringify(tokens));
+}
+
+function removeDeleteToken(storyId) {
+  const tokens = getDeleteTokens();
+  delete tokens[storyId];
+  localStorage.setItem('buzzvilDeleteTokens', JSON.stringify(tokens));
+}
+
+function canDeleteStory(story) {
+  if (!story.deleteToken) return false;
+  const tokens = getDeleteTokens();
+  return tokens[story.id] === story.deleteToken;
+}
+
+function generateToken() {
+  return Math.random().toString(36).substring(2) + Date.now().toString(36);
+}
+
 // ===== PDF MODAL =====
 function openPdfModal(version, url) {
   document.getElementById('pdfModalTitle').textContent = 'Culture Book ' + version;
@@ -2676,10 +2877,10 @@ function renderAwardsDashboard() {
   const values = ['자율', '성장', '불굴', '원팀'];
 
   document.getElementById('awardsDashboard').innerHTML = `
-    <div class="dashboard-card"><div class="dash-number">${total}</div><div class="dash-label">Total Stories</div></div>
-    <div class="dashboard-card"><div class="dash-number" style="color:var(--accent);">${totalVotes}</div><div class="dash-label">Total Votes</div></div>
-    <div class="dashboard-card"><div class="dash-number">${topStory ? topStory.votes : 0}</div><div class="dash-label">Top Story Votes</div></div>
-    <div class="dashboard-card"><div class="dash-number">${values.length}</div><div class="dash-label">Value Categories</div></div>
+    <div class="dashboard-card"><div class="dash-number">${total}</div><div class="dash-label">${t('총 사연 수', 'Total Stories')}</div></div>
+    <div class="dashboard-card"><div class="dash-number" style="color:var(--accent);">${totalVotes}</div><div class="dash-label">${t('총 투표 수', 'Total Votes')}</div></div>
+    <div class="dashboard-card"><div class="dash-number">${topStory ? topStory.votes : 0}</div><div class="dash-label">${t('최고 투표', 'Top Story Votes')}</div></div>
+    <div class="dashboard-card"><div class="dash-number">${values.length}</div><div class="dash-label">${t('핵심가치', 'Value Categories')}</div></div>
   `;
 }
 
@@ -2691,11 +2892,12 @@ function renderStories() {
   const grid = document.getElementById('storiesGrid');
   grid.innerHTML = filtered.map(s => `
     <div class="story-card" onclick="showStoryDetail(${s.id})">
+      ${canDeleteStory(s) ? '<button class="story-delete-btn" onclick="event.stopPropagation(); deleteStory(' + s.id + ')">' + t('삭제', 'Delete') + '</button>' : ''}
       <span class="story-badge" style="background: ${getValueColor(s.value)};">${s.value}</span>
       <h3>${s.title}</h3>
       <p class="preview">${s.preview}</p>
       <div class="story-meta">
-        <span>${s.nominator || 'Anonymous'} &rarr; ${s.nominee}</span>
+        <span>${s.nominator || t('익명', 'Anonymous')} &rarr; ${s.nominee}</span>
         <span class="story-votes">&#9733; ${s.votes}</span>
       </div>
     </div>
@@ -2706,11 +2908,22 @@ function renderStories() {
   grid.style.display = '';
 }
 
+function deleteStory(id) {
+  const confirmMsg = t('이 사연을 삭제하시겠습니까?', 'Are you sure you want to delete this story?');
+  if (!confirm(confirmMsg)) return;
+
+  stories = stories.filter(s => s.id !== id);
+  removeDeleteToken(id);
+  saveStories();
+  renderStories();
+  renderAwardsDashboard();
+}
+
 function filterStories(value) {
   currentFilter = value;
   document.querySelectorAll('#awardFilterTabs .filter-tab').forEach(t => {
     const tabText = t.textContent.trim();
-    const match = (value === '전체' && tabText === 'All') || tabText === value;
+    const match = (value === '전체' && (tabText === '전체' || tabText === 'All')) || tabText === value;
     t.classList.toggle('active', match);
   });
   renderStories();
@@ -2729,26 +2942,26 @@ function showStoryDetail(id) {
   detail.classList.add('active');
   detail.innerHTML = `
     <div style="background:var(--glass-bg); backdrop-filter:blur(24px); border:1px solid var(--glass-border); border-radius:16px; padding:32px; margin-bottom:24px;">
-      <button class="btn btn-outline" onclick="renderStories()" style="margin-bottom: 20px;">&larr; Back to List</button>
+      <button class="btn btn-outline" onclick="renderStories()" style="margin-bottom: 20px;">&larr; ${t('목록으로', 'Back to List')}</button>
       <span class="story-badge" style="background: ${getValueColor(s.value)}; display:inline-block; padding:4px 12px; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; margin-bottom:12px;">${s.value}</span>
       <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:8px; color:var(--white);">${s.title}</h2>
-      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px;">${s.nominator || 'Anonymous'} &rarr; ${s.nominee} | ${s.date}</p>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px;">${s.nominator || t('익명', 'Anonymous')} &rarr; ${s.nominee} | ${s.date}</p>
       <p style="font-size:0.95rem; line-height:1.8; margin-bottom:24px; color:var(--muted);">${s.preview}</p>
 
       <div style="margin-bottom:24px;">
-        <p style="font-weight:600; margin-bottom:8px; color:var(--white);">How well does this story demonstrate our values?</p>
+        <p style="font-weight:600; margin-bottom:8px; color:var(--white);">${t('이 사연이 핵심가치를 얼마나 잘 보여주나요?', 'How well does this story demonstrate our values?')}</p>
         <div class="star-rating" id="starRating">
           ${[1,2,3,4,5].map(i => `<span class="star ${i <= Math.round(s.rating) ? 'filled' : ''}" onclick="rateStory(${s.id}, ${i})">&#9733;</span>`).join('')}
         </div>
-        <span style="font-size:0.85rem; color:var(--muted);">Average ${s.rating} (${s.votes} votes)</span>
+        <span style="font-size:0.85rem; color:var(--muted);">${t('평균', 'Average')} ${s.rating} (${s.votes} ${t('명 참여', 'votes')})</span>
       </div>
 
       <div>
-        <h4 style="font-size:1rem; font-weight:600; margin-bottom:12px; color:var(--white);">Comments (${(s.comments || []).length})</h4>
+        <h4 style="font-size:1rem; font-weight:600; margin-bottom:12px; color:var(--white);">${t('댓글', 'Comments')} (${(s.comments || []).length})</h4>
         ${(s.comments || []).map(c => `<div style="padding:12px; background:rgba(255,255,255,0.04); border-radius:12px; margin-bottom:8px; font-size:0.9rem; color:var(--muted);">${c}</div>`).join('')}
         <div style="display:flex; gap:8px; margin-top:12px;">
-          <input type="text" id="commentInput" placeholder="Leave a comment..." style="flex:1; padding:10px 16px; border:1px solid var(--glass-border); border-radius:8px; font-family:inherit; color:var(--white); background:var(--glass-bg);">
-          <button class="btn btn-accent" onclick="addComment(${s.id})">Post</button>
+          <input type="text" id="commentInput" placeholder="${t('댓글을 남겨주세요...', 'Leave a comment...')}" style="flex:1; padding:10px 16px; border:1px solid var(--glass-border); border-radius:8px; font-family:inherit; color:var(--white); background:var(--glass-bg);">
+          <button class="btn btn-accent" onclick="addComment(${s.id})">${t('등록', 'Post')}</button>
         </div>
       </div>
     </div>
@@ -2780,12 +2993,14 @@ function submitStory() {
   const value = document.getElementById('storyValue').value;
   const title = document.getElementById('storyTitle').value.trim();
   const content = document.getElementById('storyContent').value.trim();
-  const author = document.getElementById('storyAuthor').value.trim() || 'Anonymous';
+  const author = document.getElementById('storyAuthor').value.trim() || t('익명', 'Anonymous');
 
   if (!nominee || !title || !content) {
-    alert('Please fill in nominee, title, and story.');
+    alert(t('추천 대상, 제목, 내용을 입력해주세요.', 'Please fill in nominee, title, and story.'));
     return;
   }
+
+  const deleteToken = generateToken();
 
   const newStory = {
     id: Date.now(),
@@ -2797,8 +3012,12 @@ function submitStory() {
     votes: 0,
     rating: 0,
     date: new Date().toISOString().slice(0, 10),
-    comments: []
+    comments: [],
+    deleteToken: deleteToken
   };
+
+  // Save delete token to localStorage
+  saveDeleteToken(newStory.id, deleteToken);
 
   stories.unshift(newStory);
   saveStories();
@@ -2809,7 +3028,7 @@ function submitStory() {
   document.getElementById('storyTitle').value = '';
   document.getElementById('storyContent').value = '';
   document.getElementById('storyAuthor').value = '';
-  alert('Story submitted!');
+  alert(t('사연이 등록되었습니다!', 'Story submitted!'));
 }
 
 // ===== BENEFITS =====
@@ -2823,13 +3042,12 @@ function renderBenefits(category) {
       </div>
       <p class="b-summary">${b.summary}</p>
       <div class="b-details">${b.details}</div>
-      <button class="expand-btn" onclick="toggleBenefit('benefit-${category}-${i}', this)">Details &#9660;</button>
+      <button class="expand-btn" onclick="toggleBenefit('benefit-${category}-${i}', this)">${t('자세히 보기', 'Details')} &#9660;</button>
     </div>
   `).join('');
 }
 
 function filterBenefits(category, btn) {
-  const colors = { '전체': 'var(--white)', '자율': 'var(--white)', '성장': 'var(--white)', '불굴': 'var(--white)', '원팀': 'var(--white)' };
   document.querySelectorAll('.benefit-tab').forEach(t => {
     t.classList.remove('active');
     t.style.background = '';
@@ -2846,7 +3064,7 @@ function filterBenefits(category, btn) {
 function toggleBenefit(id, btn) {
   const el = document.getElementById(id);
   el.classList.toggle('expanded');
-  btn.innerHTML = el.classList.contains('expanded') ? 'Collapse &#9650;' : 'Details &#9660;';
+  btn.innerHTML = el.classList.contains('expanded') ? t('접기', 'Collapse') + ' &#9650;' : t('자세히 보기', 'Details') + ' &#9660;';
 }
 
 function submitSuggestion(e) {
@@ -2925,10 +3143,10 @@ function showQuizResult() {
   document.getElementById('quizArea').style.display = 'none';
   const { score, answers } = quizState;
   let grade = '';
-  if (score === 10) grade = 'Master';
-  else if (score >= 7) grade = 'Expert';
-  else if (score >= 4) grade = 'Rookie';
-  else grade = 'Newbie';
+  if (score === 10) grade = t('마스터', 'Master');
+  else if (score >= 7) grade = t('전문가', 'Expert');
+  else if (score >= 4) grade = t('루키', 'Rookie');
+  else grade = t('뉴비', 'Newbie');
 
   const wrongAnswers = answers.filter(a => !a.isCorrect);
 
@@ -2938,20 +3156,20 @@ function showQuizResult() {
       <div class="result-score">${score} / 10</div>
       <div class="result-grade">${grade}</div>
       <p style="color:var(--muted); margin-bottom:24px;">
-        ${score === 10 ? 'Perfect! You are a true Buzzvillian!' : score >= 7 ? 'Great job! You know Buzzvil culture well!' : score >= 4 ? 'Good start! Read the Culture Book for more!' : 'Lots to learn! Explore the Culture Book!'}
+        ${score === 10 ? t('완벽합니다! 당신은 진정한 버즈빌리언!', 'Perfect! You are a true Buzzvillian!') : score >= 7 ? t('훌륭해요! 버즈빌 문화를 잘 알고 계시네요!', 'Great job! You know Buzzvil culture well!') : score >= 4 ? t('좋은 시작이에요! 컬쳐북을 더 읽어보세요!', 'Good start! Read the Culture Book for more!') : t('배울 것이 많아요! 컬쳐북을 탐험해보세요!', 'Lots to learn! Explore the Culture Book!')}
       </p>
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:24px;">
-        <button class="btn btn-accent" onclick="startQuiz()">Try Again</button>
-        <button class="btn btn-outline" onclick="copyShareText()">Share Result</button>
+        <button class="btn btn-accent" onclick="startQuiz()">${t('다시 도전', 'Try Again')}</button>
+        <button class="btn btn-outline" onclick="copyShareText()">${t('결과 공유', 'Share Result')}</button>
       </div>
       ${wrongAnswers.length > 0 ? `
         <div class="wrong-answers">
-          <h4 style="font-size:1rem; font-weight:600; margin-bottom:16px; color:var(--white);">Review Wrong Answers</h4>
+          <h4 style="font-size:1rem; font-weight:600; margin-bottom:16px; color:var(--white);">${t('오답 확인', 'Review Wrong Answers')}</h4>
           ${wrongAnswers.map(a => `
             <div class="wrong-answer-item">
               <div class="wa-q">${a.q}</div>
-              <div style="color:var(--muted); font-size:0.85rem;">Your answer: ${a.selected}</div>
-              <div class="wa-correct">Correct: ${a.correct}</div>
+              <div style="color:var(--muted); font-size:0.85rem;">${t('내 답:', 'Your answer:')} ${a.selected}</div>
+              <div class="wa-correct">${t('정답:', 'Correct:')} ${a.correct}</div>
             </div>
           `).join('')}
         </div>
@@ -2961,27 +3179,36 @@ function showQuizResult() {
 }
 
 function copyShareText() {
-  const text = `I scored ${quizState.score}/10 on the Buzzvil Culture Quiz! I'm a ${quizState.score === 10 ? 'Master' : quizState.score >= 7 ? 'Expert' : quizState.score >= 4 ? 'Rookie' : 'Newbie'}! Try it yourself!`;
-  navigator.clipboard.writeText(text).then(() => alert('Result copied to clipboard!')).catch(() => {
-    prompt('Copy this text:', text);
+  const grade = quizState.score === 10 ? t('마스터', 'Master') : quizState.score >= 7 ? t('전문가', 'Expert') : quizState.score >= 4 ? t('루키', 'Rookie') : t('뉴비', 'Newbie');
+  const text = t(
+    `버즈빌 컬쳐 퀴즈에서 ${quizState.score}/10을 맞았어요! 등급: ${grade}! 도전해보세요!`,
+    `I scored ${quizState.score}/10 on the Buzzvil Culture Quiz! I'm a ${grade}! Try it yourself!`
+  );
+  navigator.clipboard.writeText(text).then(() => alert(t('결과가 클립보드에 복사되었습니다!', 'Result copied to clipboard!'))).catch(() => {
+    prompt(t('이 텍스트를 복사하세요:', 'Copy this text:'), text);
   });
 }
 
 // ===== CHATBOT =====
 const chatRules = [
-  { keywords: ['핵심가치', 'core value', '가치'], response: '버즈빌의 4가지 핵심가치는:\n\n1. 책임감 기반 자율 (Responsible Autonomy) - 스스로 선택하고 끝까지 흔들리지 않는 사람\n2. 성장 마인드셋 (Growth Mindset) - 더 나아지고 싶다는 마음이 있다면 함께 한다\n3. 불굴 (Grit) - 어려울수록 멈추지 않는 사람\n4. 원팀 (One Team) - 혼자서는 만들 수 없는 미래를 함께 만든다' },
-  { keywords: ['자율', 'autonomy'], response: '책임감 기반 자율 (Responsible Autonomy)\n\n"스스로 선택하고 끝까지 흔들리지 않는 사람"\n\n자율은 방임이 아닙니다. 스스로 선택한 일에 책임을 지고, 선택한 방향이 옳다고 믿으면 끝까지 밀어붙이는 태도가 진정한 자율입니다.\n\n관련 복지: 버즈 홀리데이 (연 2일), 시간단위 연차' },
-  { keywords: ['성장', 'growth'], response: '성장 마인드셋 (Growth Mindset)\n\n"더 나아지고 싶다는 마음이 있다면 함께 한다"\n\n재능보다 노력을, 현재 실력보다 성장 가능성을 봅니다. 실패를 두려워하지 않고 배우는 사람을 지원합니다.\n\n관련 복지: 자기계발비 (분기 30만원), 무제한 도서구매, 버즈챌린지, 외부교육비 지원' },
-  { keywords: ['불굴', 'grit'], response: '불굴 (Grit)\n\n"어려울수록 멈추지 않는 사람"\n\n5.0에서 새롭게 추가된 가치입니다. CEO의 "유능함보다 끝까지 버티는 사람을 믿습니다"라는 철학을 담고 있습니다. 포기하고 싶은 순간에 한 번 더 시도하는 것이 불굴입니다.\n\n관련 복지: 종합검진, 단체상해보험' },
-  { keywords: ['원팀', 'one team'], response: '원팀 (One Team)\n\n"혼자서는 만들 수 없는 미래를 함께 만든다"\n\n4.0의 "소통"이 5.0에서 "원팀"으로 진화했습니다. 소통은 수단이고, 원팀은 목표입니다. 부서와 직급을 넘어 하나의 팀으로 움직이는 것이 원팀입니다.\n\n관련 복지: 동호회 지원, 회식비, 생일축하, 경조사 지원' },
-  { keywords: ['미션', 'mission'], response: '버즈빌의 미션:\n\n"We boost our client growth in a way people love."\n\n사람들이 좋아하는 방식으로 고객의 성장을 촉진합니다. 이 미션은 4.0에서 처음 정립되었으며, 5.0에서도 이어지고 있습니다.' },
+  { keywords: ['핵심가치', 'core value', '가치', '핵심 가치', 'values'], response: '버즈빌의 4가지 핵심가치는:\n\n1. 책임감 기반 자율 (Responsible Autonomy) - 스스로 선택하고 끝까지 흔들리지 않는 사람\n2. 성장 마인드셋 (Growth Mindset) - 더 나아지고 싶다는 마음이 있다면 함께 한다\n3. 불굴 (Grit) - 어려울수록 멈추지 않는 사람\n4. 원팀 (One Team) - 혼자서는 만들 수 없는 미래를 함께 만든다' },
+  { keywords: ['자율', 'autonomy', '책임감', 'responsible'], response: '책임감 기반 자율 (Responsible Autonomy)\n\n"스스로 선택하고 끝까지 흔들리지 않는 사람"\n\n자율은 방임이 아닙니다. 스스로 선택한 일에 책임을 지고, 선택한 방향이 옳다고 믿으면 끝까지 밀어붙이는 태도가 진정한 자율입니다.\n\n관련 복지: 버즈 홀리데이 (연 2일), 시간단위 연차' },
+  { keywords: ['성장', 'growth', '마인드셋', 'mindset'], response: '성장 마인드셋 (Growth Mindset)\n\n"더 나아지고 싶다는 마음이 있다면 함께 한다"\n\n재능보다 노력을, 현재 실력보다 성장 가능성을 봅니다. 실패를 두려워하지 않고 배우는 사람을 지원합니다.\n\n관련 복지: 자기계발비 (분기 30만원), 무제한 도서구매, 버즈챌린지, 외부교육비 지원' },
+  { keywords: ['불굴', 'grit', '끈기', '인내'], response: '불굴 (Grit)\n\n"어려울수록 멈추지 않는 사람"\n\n5.0에서 새롭게 추가된 가치입니다. CEO의 "유능함보다 끝까지 버티는 사람을 믿습니다"라는 철학을 담고 있습니다. 포기하고 싶은 순간에 한 번 더 시도하는 것이 불굴입니다.\n\n관련 복지: 종합검진, 단체상해보험' },
+  { keywords: ['원팀', 'one team', '팀', '팀워크', 'team'], response: '원팀 (One Team)\n\n"혼자서는 만들 수 없는 미래를 함께 만든다"\n\n4.0의 "소통"이 5.0에서 "원팀"으로 진화했습니다. 소통은 수단이고, 원팀은 목표입니다. 부서와 직급을 넘어 하나의 팀으로 움직이는 것이 원팀입니다.\n\n관련 복지: 동호회 지원, 회식비, 생일축하, 경조사 지원' },
+  { keywords: ['미션', 'mission', '사명'], response: '버즈빌의 미션:\n\n"We boost our client growth in a way people love."\n\n사람들이 좋아하는 방식으로 고객의 성장을 촉진합니다. 이 미션은 4.0에서 처음 정립되었으며, 5.0에서도 이어지고 있습니다.' },
   { keywords: ['비전', 'vision'], response: '버즈빌은 "사람들이 좋아하는 방식으로 고객의 성장을 촉진한다"는 미션 아래, 광고 기술을 통해 사용자와 광고주 모두에게 가치를 제공하는 것을 목표로 합니다.' },
-  { keywords: ['자기계발', '교육', '도서'], response: '성장 관련 복지:\n\n- 자기계발비: 분기 30만원 지원\n- 도서구매: 무제한 지원\n- 스터디그룹 활동비 지원\n- 외부교육비 지원\n- 한국어교육 (외국인 직원 대상)\n- 버즈챌린지 (사내 해커톤)\n- 브랜딩 리워드' },
-  { keywords: ['복지', 'benefit', '혜택'], response: '버즈빌 복지는 핵심가치와 연결되어 있습니다:\n\n자율: 버즈 홀리데이 (연 2일), 시간단위 연차\n성장: 자기계발비 (분기 30만원), 무제한 도서구매, 버즈챌린지 등\n불굴(건강): 종합검진, 단체상해보험\n원팀(소통): 동호회 지원, 회식비, 생일축하, 경조사 지원 등\n\n자세한 내용은 복지제도 페이지를 확인해보세요!' },
-  { keywords: ['어워드', 'award', '투표'], response: '버즈어워드는 핵심가치를 실천한 사연에 투표하는 프로그램입니다.\n\n사람에게 투표하는 것이 아니라, 핵심가치를 보여주는 이야기에 투표합니다. 자율/성장/불굴/원팀 각 가치별 사연을 등록하고, 1-5점으로 투표할 수 있습니다.' },
-  { keywords: ['역사', '변천', 'history', '컬쳐북'], response: '컬쳐북 변천사:\n\nv1.0 (2015): 5개 핵심가치, The Impossible Dream\nv2.0 (2017): Outperform with Less, JGID 도입\nv3.0 (2019): 모던 브랜딩 리뉴얼, 한영 이중언어\nv4.0 (2022): 10주년, 미션 재정립, 4개 핵심가치\nv5.0 (2024): 불굴 추가, 소통→원팀 진화\n\n변천사 페이지에서 각 버전의 PDF도 볼 수 있습니다!' },
-  { keywords: ['퀴즈', 'quiz'], response: '컬쳐 퀴즈를 통해 버즈빌 문화에 대한 이해도를 테스트할 수 있습니다!\n\n30개 문제 중 랜덤 10개가 출제되며, 미션/핵심가치/역사/복지 등 다양한 카테고리의 문제가 준비되어 있습니다.\n\n퀴즈 페이지에서 도전해보세요!' },
-  { keywords: ['버즈챌린지', 'hackathon', '해커톤'], response: '버즈챌린지는 버즈빌의 사내 해커톤입니다!\n\n정기적으로 개최되며, 새로운 아이디어를 실험하고 팀 간 협업을 통해 혁신적인 프로젝트를 만들어볼 수 있는 기회입니다. 성장 마인드셋의 핵심 복지 중 하나입니다.' }
+  { keywords: ['자기계발', '교육', '도서', '학습', '공부'], response: '성장 관련 복지:\n\n- 자기계발비: 분기 30만원 지원\n- 도서구매: 무제한 지원\n- 스터디그룹 활동비 지원\n- 외부교육비 지원\n- 한국어교육 (외국인 직원 대상)\n- 버즈챌린지 (사내 해커톤)\n- 브랜딩 리워드' },
+  { keywords: ['복지', 'benefit', '혜택', '지원', 'perks'], response: '버즈빌 복지는 핵심가치와 연결되어 있습니다:\n\n자율: 버즈 홀리데이 (연 2일), 시간단위 연차\n성장: 자기계발비 (분기 30만원), 무제한 도서구매, 버즈챌린지 등\n불굴(건강): 종합검진, 단체상해보험\n원팀(소통): 동호회 지원, 회식비, 생일축하, 경조사 지원 등\n\n자세한 내용은 복지제도 페이지를 확인해보세요!' },
+  { keywords: ['어워드', 'award', '투표', 'vote'], response: '버즈어워드는 핵심가치를 실천한 사연에 투표하는 프로그램입니다.\n\n사람에게 투표하는 것이 아니라, 핵심가치를 보여주는 이야기에 투표합니다. 자율/성장/불굴/원팀 각 가치별 사연을 등록하고, 1-5점으로 투표할 수 있습니다.' },
+  { keywords: ['역사', '변천', 'history', '컬쳐북', '히스토리'], response: '컬쳐북 변천사:\n\nv1.0 (2015): 5개 핵심가치, The Impossible Dream\nv2.0 (2017): Outperform with Less, JGID 도입\nv3.0 (2019): 모던 브랜딩 리뉴얼, 한영 이중언어\nv4.0 (2022): 10주년, 미션 재정립, 4개 핵심가치\nv5.0 (2024): 불굴 추가, 소통→원팀 진화\n\n변천사 페이지에서 각 버전의 PDF도 볼 수 있습니다!' },
+  { keywords: ['퀴즈', 'quiz', '문제'], response: '컬쳐 퀴즈를 통해 버즈빌 문화에 대한 이해도를 테스트할 수 있습니다!\n\n30개 문제 중 랜덤 10개가 출제되며, 미션/핵심가치/역사/복지 등 다양한 카테고리의 문제가 준비되어 있습니다.\n\n퀴즈 페이지에서 도전해보세요!' },
+  { keywords: ['버즈챌린지', 'hackathon', '해커톤'], response: '버즈챌린지는 버즈빌의 사내 해커톤입니다!\n\n정기적으로 개최되며, 새로운 아이디어를 실험하고 팀 간 협업을 통해 혁신적인 프로젝트를 만들어볼 수 있는 기회입니다. 성장 마인드셋의 핵심 복지 중 하나입니다.' },
+  { keywords: ['안녕', 'hello', 'hi', '하이', '반가워', '헬로'], response: '안녕하세요! 버즈빌 컬쳐 챗봇입니다. 핵심가치, 복지, 변천사, 미션 등 버즈빌 문화에 대해 궁금한 것을 물어보세요!' },
+  { keywords: ['누구', '뭐야', '소개', '정체', 'who are you'], response: '저는 버즈빌 컬쳐 챗봇이에요! 버즈빌의 핵심가치, 복지제도, 컬쳐북 변천사, 미션 등 버즈빌 문화에 대한 질문에 답변드립니다. 궁금한 것을 자유롭게 물어보세요!' },
+  { keywords: ['뭐해', '뭐하', '할 수 있', '기능'], response: '저는 버즈빌 문화에 대한 다양한 질문에 답변할 수 있어요!\n\n예를 들어:\n- 핵심가치가 뭐야?\n- 복지 알려줘\n- 컬쳐북 역사\n- 미션이 뭐야?\n- 불굴이 뭐야?\n\n등을 물어보세요!' },
+  { keywords: ['고마워', '감사', 'thanks', 'thank you'], response: '천만에요! 더 궁금한 것이 있으면 언제든 물어보세요!' },
+  { keywords: ['버즈빌', 'buzzvil'], response: '버즈빌은 "We boost our client growth in a way people love"라는 미션 아래, 사람들이 좋아하는 방식으로 고객의 성장을 촉진하는 회사입니다. 자율, 성장, 불굴, 원팀의 4가지 핵심가치를 바탕으로 문화를 만들어가고 있습니다.' }
 ];
 
 function sendChat(preset) {
@@ -3014,7 +3241,7 @@ function getBotResponse(msg) {
       }
     }
   }
-  return 'Great question! Try asking about our core values, benefits, history, or mission for more specific answers.';
+  return t('좋은 질문이네요! 핵심가치, 복지, 변천사, 미션 등에 대해 물어보시면 더 자세히 답변드릴 수 있어요.', 'Great question! Try asking about our core values, benefits, history, or mission for more specific answers.');
 }
 
 // ===== CULTURE WALL (kept for data compatibility) =====
