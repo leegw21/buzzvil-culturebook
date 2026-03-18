@@ -1608,6 +1608,61 @@ body {
   text-align: center;
 }
 
+.api-key-setup {
+  margin-bottom: 12px;
+}
+
+.api-key-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.api-key-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.api-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.api-dot.offline { background: var(--muted2); }
+.api-dot.online { background: #4CAF50; box-shadow: 0 0 6px rgba(76,175,80,0.5); }
+
+.btn-api-key {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--muted);
+  padding: 5px 14px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-api-key:hover {
+  border-color: var(--muted);
+  color: var(--white);
+}
+
+.api-key-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 0 0 8px;
+}
+
 .chat-input-area {
   display: flex;
   gap: 12px;
@@ -2516,6 +2571,21 @@ body {
       <p class="section-subtitle" style="margin-bottom:16px; text-align:center;" data-ko="버즈빌 문화에 대해 무엇이든 물어보세요" data-en="Ask anything about Buzzvil culture">버즈빌 문화에 대해 무엇이든 물어보세요</p>
     </div>
 
+    <!-- API Key Setup -->
+    <div id="apiKeySetup" class="api-key-setup">
+      <div class="api-key-bar">
+        <div class="api-key-status" id="apiKeyStatus">
+          <span class="api-dot offline"></span>
+          <span data-ko="Claude API 미연결" data-en="Claude API disconnected">Claude API 미연결</span>
+        </div>
+        <button class="btn-api-key" onclick="toggleApiKeyInput()" data-ko="API 키 설정" data-en="Set API Key">API 키 설정</button>
+      </div>
+      <div class="api-key-input-area" id="apiKeyInputArea" style="display:none;">
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="flex:1; padding:10px 14px; border:1px solid var(--glass-border); border-radius:6px; background:var(--glass-bg); color:var(--white); font-family:monospace; font-size:0.8rem;">
+        <button class="btn btn-accent" onclick="saveApiKey()" style="padding:10px 20px; font-size:0.8rem;">저장</button>
+      </div>
+    </div>
+
     <!-- Input at TOP -->
     <div class="chat-input-area">
       <input type="text" id="chatInput" placeholder="메시지를 입력하세요..." data-placeholder-ko="메시지를 입력하세요..." data-placeholder-en="Ask about our culture..." onkeypress="if(event.key==='Enter')sendChat()">
@@ -2643,12 +2713,7 @@ const benefitsData = [
   { category: '원팀', emoji: '', name: '경조사 지원', badge: '소통', summary: '경조사비 및 화환 지원', details: '결혼, 상(喪) 등 경조사에 경조사비와 화환을 지원합니다. 기쁜 일도 슬픈 일도 함께합니다.', color: 'var(--oneteam)' }
 ];
 
-const sampleStories = [
-  { id: 1, value: '불굴', title: '3개월간의 시스템 마이그레이션 도전기', preview: '레거시 시스템 마이그레이션 프로젝트에서 수차례 실패에도 불구하고 포기하지 않고 끝내 성공시킨 이야기. 매일 새벽까지 원인을 분석하고, 팀원들과 함께 하나씩 문제를 해결해나갔습니다.', nominator: '김민수', nominee: '이서진', votes: 24, rating: 4.5, date: '2024-11-15', comments: ['정말 대단한 끈기!', '불굴의 정신 그 자체'], deleteToken: null },
-  { id: 2, value: '원팀', title: '부서 간 벽을 허문 크로스펑셔널 프로젝트', preview: '마케팅, 개발, 디자인팀이 2주간 한 공간에서 함께 일하며 신규 광고 상품을 론칭한 사례. 각자의 전문성을 살리면서도 하나의 목표를 향해 달려간 원팀 정신의 모범 사례입니다.', nominator: '박지현', nominee: '프로덕트팀', votes: 31, rating: 4.8, date: '2024-11-20', comments: ['이래서 원팀이구나!', '부서 이기주의를 넘은 멋진 사례'], deleteToken: null },
-  { id: 3, value: '성장', title: '비전공자에서 풀스택 개발자로', preview: '마케팅팀 출신으로 개발에 관심을 갖고, 자기계발비와 도서구매 지원을 활용해 독학으로 개발을 배운 뒤 실제 사내 툴을 개발한 감동적인 성장 스토리.', nominator: '최영호', nominee: '한소희', votes: 28, rating: 4.6, date: '2024-12-01', comments: ['성장 마인드셋의 정석!', '버즈빌이기에 가능한 이야기'], deleteToken: null },
-  { id: 4, value: '자율', title: '스스로 발견한 비효율, 스스로 해결한 프로세스', preview: '아무도 시키지 않았지만 매주 3시간씩 낭비되던 보고 프로세스를 발견하고, 자동화 스크립트를 만들어 전사 업무 효율을 크게 높인 이야기. 책임감 기반 자율의 좋은 예시입니다.', nominator: '익명', nominee: '정다은', votes: 19, rating: 4.3, date: '2024-12-05', comments: ['이런 게 진짜 자율이지!'], deleteToken: null }
-];
+const sampleStories = [];
 
 const quizQuestions = [
   { q: '버즈빌의 미션은?', a: 'We boost our client growth in a way people love', options: ['We make the world a better place', 'We boost our client growth in a way people love', 'Innovation for everyone', 'Connect people with technology'], cat: 'mission' },
@@ -3213,25 +3278,142 @@ const chatRules = [
   { keywords: ['버즈빌', 'buzzvil'], response: '버즈빌은 "We boost our client growth in a way people love"라는 미션 아래, 사람들이 좋아하는 방식으로 고객의 성장을 촉진하는 회사입니다. 자율, 성장, 불굴, 원팀의 4가지 핵심가치를 바탕으로 문화를 만들어가고 있습니다.' }
 ];
 
-function sendChat(preset) {
+// Chat history for Claude API context
+let chatHistory = [];
+
+const CULTURE_SYSTEM_PROMPT = `당신은 버즈빌(Buzzvil) 컬쳐 챗봇입니다. 버즈빌 Culture Book 5.0의 내용을 바탕으로 답변합니다. 친절하고 간결하게 한국어로 답변하세요.
+
+## 버즈빌 소개
+미션: "We boost our client growth in a way people love."
+사람들이 좋아하는 방식으로 고객의 성장을 촉진하는 광고 기술 회사.
+
+## 핵심가치 (Culture Book 5.0)
+1. 책임감 기반 자율 (Responsible Autonomy) - "스스로 선택하고 끝까지 흔들리지 않는 사람". 자율은 방임이 아닌, 스스로 선택한 일에 책임을 지고 끝까지 밀어붙이는 태도.
+2. 성장 마인드셋 (Growth Mindset) - "더 나아지고 싶다는 마음이 있다면 함께 한다". 재능보다 노력, 현재 실력보다 성장 가능성.
+3. 불굴 (Grit) - "어려울수록 멈추지 않는 사람". 5.0에서 새로 추가. CEO: "유능함보다 끝까지 버티는 사람을 믿습니다."
+4. 원팀 (One Team) - "혼자서는 만들 수 없는 미래를 함께 만든다". 4.0의 '소통'에서 진화. 소통은 수단, 원팀은 목표.
+
+## 컬쳐북 변천사
+- v1.0 (2015): The Impossible Dream, 5개 핵심가치. 실리콘밸리 진출 실패 후 조직문화 각성.
+- v2.0 (2017): Outperform with Less, JGID/Be Bold/Take the Initiative 행동 강령 추가.
+- v3.0 (2019): 모던 브랜딩 리뉴얼, 한영 이중 언어 지원.
+- v4.0 (2022): 창립 10주년, 미션 재정립, 자율/소통/성장/고객중심 4가지 핵심가치.
+- v5.0 (2024): 소통→원팀 진화, 고객중심 제거, 불굴(Grit) 추가.
+
+## 복지제도
+- 자율: 버즈 홀리데이(연 2일), 시간단위 연차(1시간 단위)
+- 성장: 자기계발비(분기 30만원), 무제한 도서구매, 스터디그룹 지원, 외부교육비, 버즈챌린지(사내 해커톤), 장기재직자 축하금, 브랜딩 리워드
+- 불굴(건강): 종합검진(연 1회), 단체상해보험, 외부제휴서비스
+- 원팀(소통): 동호회 지원, 회식비, 리드활동비, 식대 지원, 임신선물, 생일축하, 졸업축하, 자녀축하, 퇴사선물, 경조사 지원
+
+버즈빌 문화와 관련 없는 질문에는 정중히 컬쳐 관련 질문을 유도하세요.`;
+
+function toggleApiKeyInput() {
+  const area = document.getElementById('apiKeyInputArea');
+  area.style.display = area.style.display === 'none' ? 'flex' : 'none';
+  if (area.style.display === 'flex') {
+    const saved = localStorage.getItem('buzzvilApiKey');
+    if (saved) document.getElementById('apiKeyInput').value = saved;
+  }
+}
+
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (key) {
+    localStorage.setItem('buzzvilApiKey', key);
+    updateApiStatus(true);
+    document.getElementById('apiKeyInputArea').style.display = 'none';
+  }
+}
+
+function updateApiStatus(connected) {
+  const dot = document.querySelector('.api-dot');
+  const label = document.querySelector('#apiKeyStatus span:last-child');
+  if (connected) {
+    dot.className = 'api-dot online';
+    label.textContent = t('Claude API 연결됨', 'Claude API connected');
+    label.setAttribute('data-ko', 'Claude API 연결됨');
+    label.setAttribute('data-en', 'Claude API connected');
+  } else {
+    dot.className = 'api-dot offline';
+    label.textContent = t('Claude API 미연결 (룰 기반 모드)', 'Claude API disconnected (rule-based mode)');
+    label.setAttribute('data-ko', 'Claude API 미연결 (룰 기반 모드)');
+    label.setAttribute('data-en', 'Claude API disconnected (rule-based mode)');
+  }
+}
+
+// Init API status
+if (localStorage.getItem('buzzvilApiKey')) {
+  setTimeout(() => updateApiStatus(true), 100);
+}
+
+async function sendChat(preset) {
   const input = document.getElementById('chatInput');
   const msg = preset || input.value.trim();
   if (!msg) return;
   input.value = '';
 
   const messages = document.getElementById('chatMessages');
-  messages.innerHTML += `<div class="chat-bubble user">${msg}</div>`;
+  messages.innerHTML += `<div class="chat-bubble user">${escapeHtml(msg)}</div>`;
 
   const typing = document.getElementById('typingIndicator');
   typing.classList.add('active');
   messages.scrollTop = messages.scrollHeight;
 
-  setTimeout(() => {
-    typing.classList.remove('active');
-    const response = getBotResponse(msg);
-    messages.innerHTML += `<div class="chat-bubble bot">${response.replace(/\n/g, '<br>')}</div>`;
-    messages.scrollTop = messages.scrollHeight;
-  }, 800 + Math.random() * 600);
+  const apiKey = localStorage.getItem('buzzvilApiKey');
+
+  if (apiKey) {
+    // Claude API mode
+    chatHistory.push({ role: 'user', content: msg });
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1024,
+          system: CULTURE_SYSTEM_PROMPT,
+          messages: chatHistory.slice(-10) // keep last 10 messages for context
+        })
+      });
+
+      typing.classList.remove('active');
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `API Error ${res.status}`);
+      }
+
+      const data = await res.json();
+      const reply = data.content[0].text;
+      chatHistory.push({ role: 'assistant', content: reply });
+      messages.innerHTML += `<div class="chat-bubble bot">${reply.replace(/\n/g, '<br>')}</div>`;
+    } catch (err) {
+      typing.classList.remove('active');
+      messages.innerHTML += `<div class="chat-bubble bot" style="border-left:3px solid var(--accent);">API 오류: ${escapeHtml(err.message)}<br><br><small style="color:var(--muted);">룰 기반 응답: ${getBotResponse(msg).replace(/\n/g, '<br>')}</small></div>`;
+      updateApiStatus(false);
+    }
+  } else {
+    // Rule-based fallback
+    setTimeout(() => {
+      typing.classList.remove('active');
+      const response = getBotResponse(msg);
+      messages.innerHTML += `<div class="chat-bubble bot">${response.replace(/\n/g, '<br>')}</div>`;
+      messages.scrollTop = messages.scrollHeight;
+    }, 600 + Math.random() * 400);
+  }
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
 }
 
 function getBotResponse(msg) {
