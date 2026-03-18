@@ -1,0 +1,3051 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buzzvil Culture Book 5.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0E171F;
+  --navy-light: #2A3F4D;
+  --accent: #F44336;
+  --white: #FFFFFF;
+  --muted: #9FB1BD;
+  --muted2: #5B7282;
+  --muted3: #3E5463;
+  --light-bg: #F2F5F7;
+  --light-border: #DCE3E8;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-bg-hover: rgba(255,255,255,0.10);
+  --card-radius: 16px;
+  --btn-radius: 6px;
+  --transition: all 0.25s ease;
+  --autonomy: #4A90D9;
+  --growth: #F44336;
+  --grit: #F44336;
+  --oneteam: #7B8FA8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--light-border);
+  transition: var(--transition);
+}
+
+.navbar.scrolled {
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: var(--muted2);
+  font-weight: 500;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: var(--transition);
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+  color: var(--navy);
+  border-bottom-color: var(--accent);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: var(--navy);
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ===== PAGES ===== */
+.page {
+  display: none;
+  min-height: 100vh;
+  padding-top: 64px;
+}
+
+.page.active { display: block; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--navy);
+  color: var(--white);
+  padding: 40px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 120px,
+      rgba(244,67,54,0.02) 120px,
+      rgba(244,67,54,0.02) 121px
+    );
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(244,67,54,0.06) 0%, transparent 70%);
+  bottom: -100px;
+  right: -100px;
+  border-radius: 50%;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+.hero-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  background: transparent;
+  border-radius: 4px;
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  border: 1px solid var(--muted2);
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -2px;
+  background: linear-gradient(90deg, #FB978D, #FFFFFF, #A1B7C7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 40px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2.5s ease-in-out infinite;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.scroll-arrow svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--muted2);
+  opacity: 0.6;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 80px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-dark {
+  background: var(--navy);
+}
+
+.section-light {
+  background: var(--light-bg);
+}
+
+.section-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  color: var(--white);
+}
+
+.section-title-dark {
+  color: var(--navy);
+}
+
+.section-subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 48px;
+}
+
+.section-subtitle-dark {
+  color: var(--muted2);
+}
+
+/* ===== GLASS CARDS ===== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 32px;
+  transition: var(--transition);
+}
+
+.glass-card:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-4px);
+}
+
+/* ===== CORE VALUES GRID ===== */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.value-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 32px;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.value-card:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-4px);
+}
+
+.value-card .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.08);
+}
+
+.value-card .icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.value-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--white);
+}
+
+.value-card .en-name {
+  font-size: 0.8rem;
+  color: var(--muted2);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.value-card p.desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ===== TIMELINE ===== */
+.mini-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 40px 0;
+  flex-wrap: wrap;
+}
+
+.mini-timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.timeline-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--navy-light);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Anonymous Pro', monospace;
+  font-weight: 700;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  border: 1px solid var(--glass-border);
+}
+
+.timeline-dot:hover {
+  transform: scale(1.1);
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
+}
+
+.timeline-dot .year {
+  position: absolute;
+  bottom: -24px;
+  font-size: 0.7rem;
+  color: var(--muted2);
+  white-space: nowrap;
+}
+
+.timeline-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--muted3), var(--muted2));
+}
+
+/* ===== FEATURES GRID ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.feature-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 28px;
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.feature-card:hover {
+  background: var(--glass-bg-hover);
+  transform: translateY(-4px);
+}
+
+.feature-card .feat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.feature-card .feat-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ===== CEO QUOTE ===== */
+.ceo-quote {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 56px 48px;
+  text-align: center;
+  margin-top: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ceo-quote::before {
+  content: '\201C';
+  font-size: 8rem;
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  opacity: 0.06;
+  font-family: Georgia, serif;
+  color: var(--accent);
+}
+
+.ceo-quote blockquote {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+  color: var(--white);
+}
+
+.ceo-quote cite {
+  font-style: normal;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ===== CORE VALUES PAGE ===== */
+.value-detail {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 40px;
+  margin-bottom: 32px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.value-detail:hover {
+  background: var(--glass-bg-hover);
+}
+
+.value-number {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.value-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.value-icon-lg {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.08);
+}
+
+.value-icon-lg svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--muted);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.value-header-text h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: var(--white);
+}
+
+.value-header-text .en {
+  font-size: 0.9rem;
+  color: var(--muted2);
+  margin-bottom: 8px;
+}
+
+.value-header-text .definition {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.value-description {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border-left: 2px solid var(--muted3);
+}
+
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--muted3), transparent);
+  margin: 16px 0 32px;
+}
+
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.do-list, .dont-list {
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.do-list {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.dont-list {
+  background: rgba(244,67,54,0.06);
+  border: 1px solid rgba(244,67,54,0.1);
+}
+
+.do-list h4, .dont-list h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.do-list h4 { color: var(--white); }
+.dont-list h4 { color: var(--accent); }
+
+.do-list li, .dont-list li {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  list-style: none;
+  padding-left: 24px;
+  position: relative;
+  color: var(--muted);
+}
+
+.do-list li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.dont-list li::before {
+  content: '\2717';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.benefit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.benefit-tag {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  font-family: 'Anonymous Pro', monospace;
+  border: 1px solid var(--glass-border);
+}
+
+/* ===== HISTORY PAGE ===== */
+.history-stats {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.history-stats h3 {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 1.2rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.history-stats span {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.vertical-timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.vertical-timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--muted3), var(--navy-light));
+}
+
+.timeline-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 32px;
+  margin-bottom: 32px;
+  position: relative;
+  transition: var(--transition);
+}
+
+.timeline-card:hover {
+  background: var(--glass-bg-hover);
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  left: -33px;
+  top: 36px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--navy);
+  box-shadow: 0 0 0 2px var(--muted3);
+}
+
+.timeline-card .version-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  background: var(--navy-light);
+  margin-bottom: 12px;
+  border: 1px solid var(--glass-border);
+}
+
+.timeline-card .year-text {
+  font-size: 0.85rem;
+  color: var(--muted2);
+  margin-bottom: 8px;
+}
+
+.timeline-card h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.timeline-card .mission-text {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.value-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.value-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  border: 1px solid var(--glass-border);
+  font-family: 'Anonymous Pro', monospace;
+}
+
+.timeline-card .changes {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--btn-radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.btn:hover { transform: translateY(-4px); }
+
+.btn-primary {
+  background: var(--navy);
+  color: var(--white);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-primary:hover { background: var(--navy-light); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--muted3);
+}
+
+.btn-outline:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--muted);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.btn-accent:hover {
+  opacity: 0.9;
+}
+
+/* Light theme buttons (on dark bg) */
+.btn-primary-light {
+  background: var(--white);
+  color: var(--navy);
+}
+
+.btn-primary-light:hover { background: var(--muted); transform: translateY(-4px); }
+
+.btn-outline-light {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-outline-light:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* Version comparison */
+.comparison-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 32px;
+  margin-top: 48px;
+}
+
+.comparison-selects {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.comparison-selects select {
+  padding: 10px 16px;
+  border: 1px solid var(--muted3);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  background: var(--navy);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.comparison-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.comparison-col {
+  padding: 24px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+}
+
+.comparison-col h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--white);
+  font-family: 'Anonymous Pro', monospace;
+}
+
+/* PDF Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal-content {
+  background: var(--navy);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--glass-border);
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  color: var(--muted);
+}
+
+.modal-close:hover { background: rgba(255,255,255,0.08); }
+
+.modal-body { padding: 0; }
+
+.modal-body iframe {
+  width: 100%;
+  height: 70vh;
+  border: none;
+}
+
+/* ===== AWARDS PAGE ===== */
+.awards-page-bg {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.filter-tab {
+  padding: 6px 16px;
+  border-radius: var(--btn-radius);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  color: var(--muted);
+}
+
+.filter-tab.active {
+  background: var(--white);
+  color: var(--navy);
+  border-color: var(--white);
+}
+
+.filter-tab:hover:not(.active) {
+  border-color: var(--muted);
+  color: var(--white);
+}
+
+.sort-select {
+  padding: 8px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--btn-radius);
+  font-family: inherit;
+  font-size: 0.8rem;
+  background: var(--glass-bg);
+  color: var(--muted);
+  cursor: pointer;
+  margin-left: auto;
+  color: var(--navy);
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.story-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 28px;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.story-card:hover {
+  transform: translateY(-4px);
+  background: var(--glass-bg-hover);
+}
+
+.story-card .story-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  font-family: 'Anonymous Pro', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.story-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+.story-card .preview {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.story-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.story-votes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--accent);
+  font-family: 'Anonymous Pro', monospace;
+}
+
+/* Story detail */
+.story-detail-view {
+  display: none;
+}
+
+.story-detail-view.active {
+  display: block;
+}
+
+.star-rating {
+  display: flex;
+  gap: 4px;
+}
+
+.star-rating .star {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--muted2);
+  transition: var(--transition);
+}
+
+.star-rating .star.filled, .star-rating .star:hover {
+  color: var(--accent);
+}
+
+/* Dashboard */
+.awards-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.dashboard-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  text-align: center;
+}
+
+.dashboard-card .dash-number {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--white);
+}
+
+.dashboard-card .dash-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: var(--transition);
+  background: var(--glass-bg);
+  color: var(--white);
+}
+
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--muted);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder {
+  color: var(--muted2);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 32px;
+  margin-top: 40px;
+}
+
+/* Dark form variants */
+.form-group-dark input, .form-group-dark textarea, .form-group-dark select {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--muted3);
+  color: var(--white);
+}
+
+.form-group-dark input:focus, .form-group-dark textarea:focus, .form-group-dark select:focus {
+  border-color: var(--muted);
+  box-shadow: none;
+}
+
+.form-group-dark label {
+  color: var(--muted);
+}
+
+/* ===== BENEFITS PAGE ===== */
+.benefits-page-bg {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.benefits-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.benefit-tab {
+  padding: 8px 20px;
+  border-radius: var(--btn-radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  color: var(--muted);
+}
+
+.benefit-tab.active {
+  color: var(--white);
+  border-color: transparent;
+}
+
+.benefits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.benefit-item {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 20px 24px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(244,67,54,0.3), transparent);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.benefit-item:hover {
+  transform: translateY(-4px);
+  background: var(--glass-bg-hover);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.benefit-item:hover::before {
+  opacity: 1;
+}
+
+.benefit-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.benefit-item h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.benefit-item .b-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: 'Anonymous Pro', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  border: 1px solid var(--glass-border);
+  flex-shrink: 0;
+}
+
+.benefit-item .b-summary {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.benefit-item .b-details {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+  padding-top: 12px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.benefit-item.expanded .b-details {
+  display: block;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.expand-btn:hover {
+  color: var(--white);
+}
+
+/* ===== QUIZ PAGE ===== */
+.quiz-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.quiz-start {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.quiz-start h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+  color: var(--white);
+}
+
+.quiz-start p {
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #FB978D);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.quiz-question {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 36px;
+}
+
+.q-number {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 0.8rem;
+  color: var(--muted2);
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.q-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  color: var(--white);
+}
+
+.q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.q-option {
+  padding: 14px 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: rgba(255,255,255,0.03);
+  text-align: left;
+  color: var(--muted);
+}
+
+.q-option:hover:not(.selected):not(.correct):not(.wrong) {
+  border-color: var(--muted);
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+}
+
+.q-option.correct {
+  border-color: #4CAF50;
+  background: rgba(76,175,80,0.12);
+  color: #81C784;
+}
+
+.q-option.wrong {
+  border-color: var(--accent);
+  background: rgba(244,67,54,0.12);
+  color: #EF9A9A;
+}
+
+/* Quiz result */
+.quiz-result {
+  text-align: center;
+  padding: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+}
+
+.result-score {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 4rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #FB978D, #FFFFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.result-grade {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 12px 0 24px;
+  color: var(--white);
+}
+
+.wrong-answers {
+  text-align: left;
+  margin-top: 32px;
+}
+
+.wrong-answer-item {
+  padding: 16px;
+  background: rgba(244,67,54,0.08);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  border-left: 3px solid var(--accent);
+}
+
+.wrong-answer-item .wa-q {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--white);
+}
+
+.wrong-answer-item .wa-correct {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ===== CHATBOT PAGE ===== */
+.chat-container {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 64px);
+  padding: 0 24px;
+}
+
+.chat-header {
+  padding: 80px 0 24px;
+  text-align: center;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 12px 20px;
+  border: 1px solid var(--muted3);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: var(--transition);
+  background: rgba(255,255,255,0.06);
+  color: var(--white);
+}
+
+.chat-input-area input::placeholder {
+  color: var(--muted3);
+}
+
+.chat-input-area input:focus {
+  outline: none;
+  border-color: var(--muted);
+}
+
+.chat-send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--navy-light);
+  color: var(--white);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-send-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.chat-send-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.suggested-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.chip {
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  color: var(--muted);
+}
+
+.chip:hover {
+  border-color: var(--muted);
+  color: var(--white);
+  background: rgba(255,255,255,0.08);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  animation: fadeInUp 0.2s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-bubble.bot {
+  align-self: flex-start;
+  background: var(--navy-light);
+  color: var(--muted);
+  border: 1px solid var(--glass-border);
+  border-bottom-left-radius: 2px;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  border: 1px solid var(--glass-border);
+  border-bottom-right-radius: 2px;
+}
+
+.typing-indicator {
+  display: none;
+  align-self: flex-start;
+  padding: 14px 20px;
+  background: var(--navy-light);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  border-bottom-left-radius: 2px;
+  gap: 4px;
+}
+
+.typing-indicator.active { display: flex; }
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: var(--muted2);
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: typingBounce 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--navy);
+  color: var(--white);
+  text-align: center;
+  padding: 56px 24px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.footer .footer-mission {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.footer .footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.footer .footer-links a {
+  color: var(--muted2);
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: var(--transition);
+  letter-spacing: 0.02em;
+}
+
+.footer .footer-links a:hover { color: var(--white); }
+
+.footer .copyright {
+  font-size: 0.8rem;
+  color: var(--muted3);
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== CARD for light pages ===== */
+.card-light {
+  background: var(--white);
+  border: 1px solid var(--light-border);
+  border-radius: var(--card-radius);
+  padding: 32px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    padding: 16px;
+    border-bottom: 1px solid var(--light-border);
+  }
+
+  .nav-menu.open { display: flex; }
+  .hamburger { display: flex; }
+  .hero h1 { font-size: 1.8rem; }
+
+  .do-dont { grid-template-columns: 1fr; }
+  .comparison-result { grid-template-columns: 1fr; }
+  .stories-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .benefits-list { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+
+  .vertical-timeline { padding-left: 30px; }
+  .timeline-card::before { left: -23px; }
+
+  .section { padding: 48px 16px; }
+}
+
+@media (max-width: 480px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .mini-timeline { gap: 0; }
+  .timeline-line { width: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-logo" onclick="navigateTo('home')">buzzvil culture book</div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home" onclick="closeMenu()">Home</a></li>
+      <li><a href="#core-values" onclick="closeMenu()">Core Values</a></li>
+      <li><a href="#history" onclick="closeMenu()">History</a></li>
+      <li><a href="#awards" onclick="closeMenu()">Awards</a></li>
+      <li><a href="#benefits" onclick="closeMenu()">Benefits</a></li>
+      <li><a href="#quiz" onclick="closeMenu()">Quiz</a></li>
+      <li><a href="#chat" onclick="closeMenu()">Chat</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div class="page" id="page-home">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Culture Book 5.0</div>
+      <h1>We boost our client growth<br>in a way people love.</h1>
+      <p>Buzzvil Culture Book 5.0 -- How we work, what we believe</p>
+    </div>
+    <div class="scroll-arrow" onclick="document.getElementById('home-values').scrollIntoView({behavior:'smooth'})">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Core Values Quick Grid -->
+  <div class="section" id="home-values">
+    <h2 class="section-title fade-in">Core Values</h2>
+    <p class="section-subtitle fade-in">4 core values shared by Buzzvillians</p>
+    <div class="values-grid">
+      <div class="value-card fade-in" onclick="navigateTo('core-values')">
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </div>
+        <h3>Responsible Autonomy</h3>
+        <p class="en-name">책임감 기반 자율</p>
+        <p class="desc">Choose for yourself, stand firm to the end</p>
+      </div>
+      <div class="value-card fade-in" onclick="navigateTo('core-values')">
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="4"/><polyline points="6 10 12 4 18 10"/></svg>
+        </div>
+        <h3>Growth Mindset</h3>
+        <p class="en-name">성장 마인드셋</p>
+        <p class="desc">If you want to get better, we walk with you</p>
+      </div>
+      <div class="value-card fade-in" onclick="navigateTo('core-values')">
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2c1 3 4 5.5 4 8.5a4 4 0 1 1-8 0C8 7.5 11 5 12 2z"/></svg>
+        </div>
+        <h3>Grit</h3>
+        <p class="en-name">불굴</p>
+        <p class="desc">The harder it gets, the further we push</p>
+      </div>
+      <div class="value-card fade-in" onclick="navigateTo('core-values')">
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>One Team</h3>
+        <p class="en-name">원팀</p>
+        <p class="desc">Building a future together that no one can build alone</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline Preview -->
+  <div class="section">
+    <h2 class="section-title fade-in">Culture Book History</h2>
+    <p class="section-subtitle fade-in">Our cultural journey since 2015</p>
+    <div class="mini-timeline fade-in">
+      <div class="mini-timeline-item">
+        <div class="timeline-dot" onclick="navigateTo('history')">v1.0<span class="year">2015</span></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="mini-timeline-item">
+        <div class="timeline-dot" onclick="navigateTo('history')">v2.0<span class="year">2017</span></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="mini-timeline-item">
+        <div class="timeline-dot" onclick="navigateTo('history')">v3.0<span class="year">2019</span></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="mini-timeline-item">
+        <div class="timeline-dot" onclick="navigateTo('history')">v4.0<span class="year">2022</span></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="mini-timeline-item">
+        <div class="timeline-dot" onclick="navigateTo('history')" style="background:var(--accent); border-color:var(--accent); color:var(--white);">v5.0<span class="year">2024</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Grid -->
+  <div class="section">
+    <h2 class="section-title fade-in">Explore More</h2>
+    <p class="section-subtitle fade-in">Discover the many facets of Buzzvil culture</p>
+    <div class="features-grid">
+      <a class="feature-card fade-in" href="#awards">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <h3>Buzz Awards</h3>
+        <p>Vote for stories that embody our values</p>
+      </a>
+      <a class="feature-card fade-in" href="#benefits">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V5a3 3 0 0 0-3-3h0a3 3 0 0 0-3 3v3"/><path d="M12 8V5a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v3"/><line x1="12" y1="8" x2="12" y2="20"/></svg>
+        </div>
+        <h3>Benefits</h3>
+        <p>Perks and benefits for Buzzvillians</p>
+      </a>
+      <a class="feature-card fade-in" href="#quiz">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <h3>Culture Quiz</h3>
+        <p>How well do you know Buzzvil?</p>
+      </a>
+      <a class="feature-card fade-in" href="#chat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>AI Chatbot</h3>
+        <p>Ask anything about our culture</p>
+      </a>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ==================== CORE VALUES PAGE ==================== -->
+<div class="page" id="page-core-values">
+  <div class="section">
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
+    </div>
+    <h2 class="section-title fade-in" style="text-align:center;">Core Values</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;">The 4 core values that define Buzzvillians in Culture Book 5.0</p>
+
+    <!-- 01 자율 -->
+    <div class="value-detail fade-in">
+      <span class="value-number">01</span>
+      <div class="value-header">
+        <div class="value-icon-lg">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </div>
+        <div class="value-header-text">
+          <h2>책임감 기반 자율</h2>
+          <p class="en">Responsible Autonomy</p>
+          <p class="definition">"스스로 선택하고 끝까지 흔들리지 않는 사람"</p>
+        </div>
+      </div>
+      <div class="value-description">
+        버즈빌은 개인의 자율성을 존중합니다. 그러나 자율은 방임이 아닙니다. 스스로 선택한 일에 책임을 지고, 선택한 방향이 옳다고 믿으면 끝까지 밀어붙이는 태도가 진정한 자율입니다. 우리는 누군가 시켜서 하는 일이 아니라, 스스로 필요하다고 판단한 일을 해내는 사람들의 모임입니다. 자율적인 사람만이 창의적일 수 있고, 책임감 있는 사람만이 자율을 누릴 자격이 있습니다.
+      </div>
+      <div class="do-dont">
+        <div class="do-list">
+          <h4>&#10003; DO</h4>
+          <ul>
+            <li>자신의 업무 범위와 목표를 스스로 설정하고 실행한다</li>
+            <li>문제를 발견하면 지시를 기다리지 않고 먼저 해결책을 찾는다</li>
+            <li>결과에 대한 책임을 받아들이고 투명하게 공유한다</li>
+          </ul>
+        </div>
+        <div class="dont-list">
+          <h4>&#10007; DON'T</h4>
+          <ul>
+            <li>누군가 시켜야만 움직이는 수동적 태도를 보인다</li>
+            <li>자율을 핑계로 소통 없이 독단적으로 행동한다</li>
+            <li>실패의 원인을 외부 환경이나 타인에게 돌린다</li>
+          </ul>
+        </div>
+      </div>
+      <div class="benefit-tags">
+        <span class="benefit-tag">Buzz Holiday</span>
+        <span class="benefit-tag">Hourly PTO</span>
+      </div>
+    </div>
+
+    <div class="gradient-divider"></div>
+
+    <!-- 02 성장 -->
+    <div class="value-detail fade-in">
+      <span class="value-number">02</span>
+      <div class="value-header">
+        <div class="value-icon-lg">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="4"/><polyline points="6 10 12 4 18 10"/></svg>
+        </div>
+        <div class="value-header-text">
+          <h2>성장 마인드셋</h2>
+          <p class="en">Growth Mindset</p>
+          <p class="definition">"더 나아지고 싶다는 마음이 있다면 함께 한다"</p>
+        </div>
+      </div>
+      <div class="value-description">
+        재능보다 노력을, 현재 실력보다 성장 가능성을 봅니다. 지금 부족하더라도 더 나아지고 싶다는 마음이 있다면 버즈빌은 그 사람과 함께합니다. 실패를 두려워하지 않고, 실패에서 배우고, 어제보다 나은 오늘을 만드는 사람. 그것이 버즈빌이 원하는 성장 마인드셋입니다. 우리는 끊임없이 학습하고 도전하며, 개인과 조직이 함께 성장하는 환경을 만들어갑니다.
+      </div>
+      <div class="do-dont">
+        <div class="do-list">
+          <h4>&#10003; DO</h4>
+          <ul>
+            <li>새로운 기술이나 지식을 꾸준히 학습하며 성장한다</li>
+            <li>피드백을 열린 마음으로 수용하고 개선에 활용한다</li>
+            <li>동료의 성장을 돕고 지식을 적극적으로 공유한다</li>
+          </ul>
+        </div>
+        <div class="dont-list">
+          <h4>&#10007; DON'T</h4>
+          <ul>
+            <li>"나는 원래 이래"라며 변화를 거부한다</li>
+            <li>편한 영역에만 머물며 도전을 회피한다</li>
+            <li>실패를 숨기거나 같은 실수를 반복한다</li>
+          </ul>
+        </div>
+      </div>
+      <div class="benefit-tags">
+        <span class="benefit-tag">Self-dev Fund</span>
+        <span class="benefit-tag">Books</span>
+        <span class="benefit-tag">Buzz Challenge</span>
+        <span class="benefit-tag">Education</span>
+      </div>
+    </div>
+
+    <div class="gradient-divider"></div>
+
+    <!-- 03 불굴 -->
+    <div class="value-detail fade-in">
+      <span class="value-number">03</span>
+      <div class="value-header">
+        <div class="value-icon-lg">
+          <svg viewBox="0 0 24 24"><path d="M12 2c1 3 4 5.5 4 8.5a4 4 0 1 1-8 0C8 7.5 11 5 12 2z"/></svg>
+        </div>
+        <div class="value-header-text">
+          <h2>불굴</h2>
+          <p class="en">Grit</p>
+          <p class="definition">"어려울수록 멈추지 않는 사람"</p>
+        </div>
+      </div>
+      <div class="value-description">
+        5.0에서 새롭게 추가된 핵심가치입니다. 유능함보다 끝까지 버티는 사람을 믿습니다. 세상에 쉬운 일은 없습니다. 예상치 못한 장애물, 시장의 변화, 기술적 난관. 이 모든 어려움 앞에서 멈추지 않고 한 걸음 더 나아가는 사람이 결국 목표에 도달합니다. 불굴은 무모함이 아닌, 꾸준함과 인내의 미덕입니다. 포기하고 싶은 순간에 한 번 더 시도하는 것, 그것이 불굴입니다.
+      </div>
+      <div class="do-dont">
+        <div class="do-list">
+          <h4>&#10003; DO</h4>
+          <ul>
+            <li>어려운 문제 앞에서 포기하지 않고 끝까지 방법을 찾는다</li>
+            <li>장기적인 목표를 세우고 꾸준히 실행한다</li>
+            <li>실패 후에도 원인을 분석하고 다시 도전한다</li>
+          </ul>
+        </div>
+        <div class="dont-list">
+          <h4>&#10007; DON'T</h4>
+          <ul>
+            <li>처음 실패에 바로 포기하고 다른 일로 넘어간다</li>
+            <li>어려운 업무를 의도적으로 회피하거나 미룬다</li>
+            <li>잘 안 되는 이유만 찾고 대안을 모색하지 않는다</li>
+          </ul>
+        </div>
+      </div>
+      <div class="benefit-tags">
+        <span class="benefit-tag">Health Checkup</span>
+        <span class="benefit-tag">Insurance</span>
+        <span class="benefit-tag">Partnerships</span>
+      </div>
+    </div>
+
+    <div class="gradient-divider"></div>
+
+    <!-- 04 원팀 -->
+    <div class="value-detail fade-in">
+      <span class="value-number">04</span>
+      <div class="value-header">
+        <div class="value-icon-lg">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="value-header-text">
+          <h2>원팀</h2>
+          <p class="en">One Team</p>
+          <p class="definition">"혼자서는 만들 수 없는 미래를 함께 만든다"</p>
+        </div>
+      </div>
+      <div class="value-description">
+        4.0에서의 '소통'이 5.0에서 '원팀'으로 진화했습니다. 소통은 수단이고, 원팀은 목표입니다. 부서, 직급, 국적을 넘어 하나의 팀으로 움직이는 것. 서로의 전문성을 신뢰하고, 같은 목표를 향해 협력하며, 성과도 실패도 함께 나누는 것이 원팀입니다. 혼자 빠르게 가는 것보다, 함께 멀리 가는 것을 선택하는 조직, 그것이 버즈빌입니다.
+      </div>
+      <div class="do-dont">
+        <div class="do-list">
+          <h4>&#10003; DO</h4>
+          <ul>
+            <li>팀의 성과를 위해 자신의 역할 이상을 기꺼이 수행한다</li>
+            <li>다른 팀과 적극적으로 협업하고 정보를 공유한다</li>
+            <li>동료의 의견을 경청하고 건설적인 토론을 한다</li>
+          </ul>
+        </div>
+        <div class="dont-list">
+          <h4>&#10007; DON'T</h4>
+          <ul>
+            <li>"그건 내 일이 아니야"라며 경계를 두고 협업을 거부한다</li>
+            <li>팀의 성과보다 개인의 성과만 추구한다</li>
+            <li>정보를 독점하거나 사일로(silo)를 만든다</li>
+          </ul>
+        </div>
+      </div>
+      <div class="benefit-tags">
+        <span class="benefit-tag">Clubs</span>
+        <span class="benefit-tag">Team Dinner</span>
+        <span class="benefit-tag">Birthday</span>
+        <span class="benefit-tag">Family Events</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HISTORY PAGE ==================== -->
+<div class="page" id="page-history">
+  <div class="section">
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
+    </div>
+    <h2 class="section-title fade-in" style="text-align:center;">Culture Book History</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;">The evolution of Buzzvil culture from 2015 to today</p>
+
+    <div class="history-stats fade-in">
+      <h3><span>10</span>년의 여정, <span>5</span>번의 진화</h3>
+    </div>
+
+    <div class="vertical-timeline">
+      <!-- v1.0 -->
+      <div class="timeline-card fade-in">
+        <span class="version-badge">v1.0</span>
+        <p class="year-text">2015년</p>
+        <h3>The Impossible Dream</h3>
+        <p class="mission-text">창업 정신과 꿈을 담은 첫 번째 컬쳐북</p>
+        <div class="value-badges">
+          <span class="value-badge">Dream</span>
+          <span class="value-badge">Focus</span>
+          <span class="value-badge">Relationships</span>
+          <span class="value-badge">Patience</span>
+          <span class="value-badge">Belief</span>
+        </div>
+        <p class="changes">실리콘밸리 진출 실패 후 조직문화의 중요성을 깨달으며 탄생. 5개의 핵심가치를 정의하고 "The Impossible Dream"을 테마곡으로 삼아 창업 초기의 열정과 비전을 담았습니다.</p>
+        <button class="btn btn-outline" onclick="openPdfModal('v1.0', 'https://drive.google.com/file/d/1EMaWVq0V2qTp7IhezGPmg8QZr6ZIPaoq/preview')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF
+        </button>
+      </div>
+
+      <!-- v2.0 -->
+      <div class="timeline-card fade-in">
+        <span class="version-badge">v2.0</span>
+        <p class="year-text">2017년</p>
+        <h3>Outperform with Less</h3>
+        <p class="mission-text">적은 자원으로 더 큰 성과를 만들어내는 문화</p>
+        <div class="value-badges">
+          <span class="value-badge">JGID (Just Get It Done)</span>
+          <span class="value-badge">Be Bold</span>
+          <span class="value-badge">Take the Initiative</span>
+        </div>
+        <p class="changes">핵심가치에 구체적인 행동 강령을 추가. 회의 그라운드 룰을 정비하고 "Outperform with Less" 슬로건 아래 효율적 업무 문화를 강조했습니다.</p>
+        <button class="btn btn-outline" onclick="openPdfModal('v2.0', 'https://drive.google.com/file/d/1J42fPwmHm5ODDWb7E35ZSilIcQ0M60qn/preview')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF
+        </button>
+      </div>
+
+      <!-- v3.0 -->
+      <div class="timeline-card fade-in">
+        <span class="version-badge" style="background:var(--accent); border-color:var(--accent);">v3.0</span>
+        <p class="year-text">2019년</p>
+        <h3>Culture Book Renewal</h3>
+        <p class="mission-text">모던 브랜딩과 한영 이중 언어로 재탄생</p>
+        <div class="value-badges">
+          <span class="value-badge">리뉴얼 디자인</span>
+          <span class="value-badge">한영 이중언어</span>
+          <span class="value-badge">구조화</span>
+        </div>
+        <p class="changes">컬쳐북 전면 리뉴얼. 모던 브랜딩으로 재디자인하고 한국어/영어 이중 언어를 지원. 글로벌 팀원들도 함께 공감할 수 있는 컬쳐북으로 발전했습니다.</p>
+        <button class="btn btn-outline" onclick="openPdfModal('v3.0', 'https://drive.google.com/file/d/1fDDQXwqGIE8QrUKcRq6I2q9B0-3CgQgQ/preview')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF
+        </button>
+      </div>
+
+      <!-- v4.0 -->
+      <div class="timeline-card fade-in">
+        <span class="version-badge">v4.0</span>
+        <p class="year-text">2022년 (창립 10주년)</p>
+        <h3>We Boost Our Client Growth In a Way People Love</h3>
+        <p class="mission-text">미션 재정립과 버즈빌리언 인터뷰 수록</p>
+        <div class="value-badges">
+          <span class="value-badge">자율 (Autonomy)</span>
+          <span class="value-badge">소통 (Communication)</span>
+          <span class="value-badge">성장 (Growth)</span>
+          <span class="value-badge">고객중심 (Customer-centric)</span>
+        </div>
+        <p class="changes">창립 10주년을 맞아 미션을 새롭게 정립. 5개에서 4개로 핵심가치를 재정비하고, 실제 버즈빌리언 인터뷰를 수록하여 살아있는 컬쳐북을 만들었습니다.</p>
+        <button class="btn btn-outline" onclick="openPdfModal('v4.0', 'https://drive.google.com/file/d/1FI52z6AycrBwd0FB1U3-Kd40Ra_SoC8g/preview')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF
+        </button>
+      </div>
+
+      <!-- v5.0 -->
+      <div class="timeline-card fade-in">
+        <span class="version-badge" style="background:var(--accent); border-color:var(--accent);">v5.0</span>
+        <p class="year-text">2024년</p>
+        <h3>끝까지 버티는 사람을 믿습니다</h3>
+        <p class="mission-text">불굴의 가치를 새롭게 추가, 원팀으로 진화</p>
+        <div class="value-badges">
+          <span class="value-badge">자율 (Autonomy)</span>
+          <span class="value-badge">성장 (Growth)</span>
+          <span class="value-badge" style="background:rgba(244,67,54,0.15); color:#EF9A9A; border-color:rgba(244,67,54,0.3);">불굴 (Grit) *NEW</span>
+          <span class="value-badge">원팀 (One Team) *evolved</span>
+        </div>
+        <p class="changes">'소통'이 '원팀'으로 진화하고, '고객중심'이 빠진 자리에 '불굴(Grit)'이 새롭게 추가되었습니다. CEO의 "유능함보다 끝까지 버티는 사람을 믿습니다"라는 메시지가 핵심 철학으로 자리잡았습니다.</p>
+        <button class="btn btn-outline" onclick="openPdfModal('v5.0', 'https://drive.google.com/file/d/1TDnGFCzdPZ1AeklgsxMVC4WYBgQY0fcN/preview')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Version Comparison -->
+    <div class="comparison-section fade-in">
+      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: var(--white);">Version Comparison</h3>
+      <div class="comparison-selects">
+        <select id="compareA" onchange="updateComparison()">
+          <option value="1">v1.0 (2015)</option>
+          <option value="2">v2.0 (2017)</option>
+          <option value="3">v3.0 (2019)</option>
+          <option value="4" selected>v4.0 (2022)</option>
+          <option value="5">v5.0 (2024)</option>
+        </select>
+        <span style="font-weight:600; color: var(--muted);">vs</span>
+        <select id="compareB" onchange="updateComparison()">
+          <option value="1">v1.0 (2015)</option>
+          <option value="2">v2.0 (2017)</option>
+          <option value="3">v3.0 (2019)</option>
+          <option value="4">v4.0 (2022)</option>
+          <option value="5" selected>v5.0 (2024)</option>
+        </select>
+      </div>
+      <div class="comparison-result" id="comparisonResult"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== AWARDS PAGE ==================== -->
+<div class="page awards-page-bg" id="page-awards">
+  <div class="section">
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
+    </div>
+    <h2 class="section-title fade-in" style="text-align:center;">Buzz Awards</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;">Vote for stories that embody our core values &mdash; we vote for stories, not people</p>
+
+    <!-- Dashboard -->
+    <div class="awards-dashboard fade-in" id="awardsDashboard"></div>
+
+    <!-- Filters -->
+    <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;" class="fade-in">
+      <div class="filter-tabs" id="awardFilterTabs" style="justify-content:center;">
+        <button class="filter-tab active" onclick="filterStories('전체')">All</button>
+        <button class="filter-tab" onclick="filterStories('자율')">자율</button>
+        <button class="filter-tab" onclick="filterStories('성장')">성장</button>
+        <button class="filter-tab" onclick="filterStories('불굴')">불굴</button>
+        <button class="filter-tab" onclick="filterStories('원팀')">원팀</button>
+      </div>
+      <select class="sort-select" id="awardSort" onchange="sortStories()">
+        <option value="latest">Latest</option>
+        <option value="votes">Most Votes</option>
+      </select>
+    </div>
+
+    <!-- Stories Grid -->
+    <div class="stories-grid" id="storiesGrid"></div>
+
+    <!-- Story Detail -->
+    <div class="story-detail-view" id="storyDetail"></div>
+
+    <!-- Submit Form -->
+    <div class="form-card fade-in">
+      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:20px; color:var(--navy);">Submit a Story</h3>
+      <div class="form-group">
+        <label style="color:var(--white);">Nominee</label>
+        <input type="text" id="storyNominee" placeholder="Who demonstrated our values?">
+      </div>
+      <div class="form-group">
+        <label style="color:var(--white);">Core Value</label>
+        <select id="storyValue">
+          <option value="자율">자율 (Autonomy)</option>
+          <option value="성장">성장 (Growth)</option>
+          <option value="불굴">불굴 (Grit)</option>
+          <option value="원팀">원팀 (One Team)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label style="color:var(--white);">Title</label>
+        <input type="text" id="storyTitle" placeholder="Give your story a title">
+      </div>
+      <div class="form-group">
+        <label style="color:var(--white);">Story</label>
+        <textarea id="storyContent" placeholder="Tell us what happened..."></textarea>
+      </div>
+      <div class="form-group">
+        <label style="color:var(--white);">Your Name (optional)</label>
+        <input type="text" id="storyAuthor" placeholder="Anonymous if blank">
+      </div>
+      <button class="btn btn-primary-light" onclick="submitStory()">Submit Story</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BENEFITS PAGE ==================== -->
+<div class="page benefits-page-bg" id="page-benefits">
+  <div class="section">
+    <div style="text-align:center; margin-bottom:16px;">
+      <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
+    </div>
+    <h2 class="section-title fade-in" style="text-align:center;">Benefits</h2>
+    <p class="section-subtitle fade-in" style="text-align:center;">Benefits for Buzzvillians, connected to our core values</p>
+
+    <div class="benefits-tabs fade-in" style="justify-content:center;">
+      <button class="benefit-tab active" style="background:var(--white); color:var(--navy); border-color:var(--white);" onclick="filterBenefits('전체', this)">전체</button>
+      <button class="benefit-tab" onclick="filterBenefits('자율', this)">자율</button>
+      <button class="benefit-tab" onclick="filterBenefits('성장', this)">성장</button>
+      <button class="benefit-tab" onclick="filterBenefits('불굴', this)">불굴</button>
+      <button class="benefit-tab" onclick="filterBenefits('원팀', this)">원팀</button>
+    </div>
+
+    <div class="benefits-list" id="benefitsList"></div>
+
+    <!-- Suggestion Form -->
+    <div class="form-card fade-in" style="margin-top:48px;">
+      <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:20px; color:var(--navy);">Suggest a Benefit</h3>
+      <form onsubmit="submitSuggestion(event)">
+        <div class="form-group">
+          <label style="color:var(--white);">Name</label>
+          <input type="text" id="suggestName" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label style="color:var(--white);">Email</label>
+          <input type="email" id="suggestEmail" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label style="color:var(--white);">Related Core Value</label>
+          <select id="suggestValue">
+            <option value="자율">자율</option>
+            <option value="성장">성장</option>
+            <option value="불굴">불굴</option>
+            <option value="원팀">원팀</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="color:var(--white);">Benefit Title</label>
+          <input type="text" id="suggestTitle" placeholder="Suggested benefit name" required>
+        </div>
+        <div class="form-group">
+          <label style="color:var(--white);">Description</label>
+          <textarea id="suggestContent" placeholder="Describe your suggestion..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary-light">Send Suggestion</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUIZ PAGE ==================== -->
+<div class="page" id="page-quiz">
+  <div class="section" style="position:relative;">
+    <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:radial-gradient(ellipse at top, rgba(244,67,54,0.05) 0%, transparent 60%); pointer-events:none;"></div>
+    <div class="quiz-container" style="position:relative; z-index:1;">
+      <div id="quizStart" class="quiz-start">
+        <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
+        <h2>Culture Quiz</h2>
+        <p>Test your knowledge of Buzzvil culture!<br>10 random questions from 30+ questions.</p>
+        <button class="btn btn-accent" onclick="startQuiz()">Start Quiz</button>
+      </div>
+      <div id="quizArea" style="display:none;"></div>
+      <div id="quizResult" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CHAT PAGE ==================== -->
+<div class="page" id="page-chat">
+  <div class="chat-container">
+    <div class="chat-header">
+      <div style="height:3px; width:80px; margin:0 auto 24px; background:linear-gradient(90deg, #FB978D, var(--accent), #A1B7C7); border-radius:2px;"></div>
+      <h2 class="section-title" style="text-align:center;">AI Culture Chatbot</h2>
+      <p class="section-subtitle" style="margin-bottom:16px; text-align:center;">Ask anything about Buzzvil culture</p>
+    </div>
+
+    <!-- Input at TOP -->
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask about our culture..." onkeypress="if(event.key==='Enter')sendChat()">
+      <button class="chat-send-btn" onclick="sendChat()">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+    <!-- Suggested chips below input -->
+    <div class="suggested-chips">
+      <button class="chip" onclick="sendChat('핵심가치가 뭐야?')">Core Values</button>
+      <button class="chip" onclick="sendChat('자율이 뭐야?')">Autonomy</button>
+      <button class="chip" onclick="sendChat('불굴이 뭐야?')">Grit</button>
+      <button class="chip" onclick="sendChat('복지 알려줘')">Benefits</button>
+      <button class="chip" onclick="sendChat('컬쳐북 역사')">History</button>
+      <button class="chip" onclick="sendChat('미션이 뭐야?')">Mission</button>
+    </div>
+
+    <!-- Chat messages below -->
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-bubble bot">Welcome! I'm the Buzzvil Culture Chatbot. Ask me about our core values, benefits, history, or anything about our culture!</div>
+    </div>
+    <div class="typing-indicator" id="typingIndicator">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p class="footer-mission">We boost our client growth in a way people love.</p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#core-values">Core Values</a>
+    <a href="#history">History</a>
+    <a href="#awards">Awards</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#chat">Chat</a>
+  </div>
+  <p class="copyright">&copy; 2024 Buzzvil. All rights reserved.</p>
+</footer>
+
+<!-- PDF Modal -->
+<div class="modal-overlay" id="pdfModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="pdfModalTitle">Culture Book PDF</h3>
+      <button class="modal-close" onclick="closePdfModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="pdfIframe" src="" allow="autoplay"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+
+const versionData = {
+  1: { version: 'v1.0', year: 2015, mission: 'The Impossible Dream', values: ['Dream', 'Focus', 'Relationships', 'Patience', 'Belief'], keyChanges: '실리콘밸리 진출 실패 후 조직문화 각성. 5개 핵심가치와 The Impossible Dream 테마.' },
+  2: { version: 'v2.0', year: 2017, mission: 'Outperform with Less', values: ['JGID', 'Be Bold', 'Take the Initiative'], keyChanges: '행동 강령 추가. 회의 그라운드 룰. 효율적 업무 문화 강조.' },
+  3: { version: 'v3.0', year: 2019, mission: 'Culture Book Renewal', values: ['리뉴얼 디자인', '한영 이중언어', '구조화'], keyChanges: '모던 브랜딩 리디자인. 한국어/영어 이중 언어 지원.' },
+  4: { version: 'v4.0', year: 2022, mission: 'We Boost Our Client Growth In a Way People Love', values: ['자율', '소통', '성장', '고객중심'], keyChanges: '창립 10주년. 미션 재정립. 버즈빌리언 인터뷰 수록.' },
+  5: { version: 'v5.0', year: 2024, mission: '끝까지 버티는 사람을 믿습니다', values: ['자율', '성장', '불굴(NEW)', '원팀(진화)'], keyChanges: '소통→원팀 진화. 고객중심 제거. 불굴(Grit) 추가.' }
+};
+
+const benefitsData = [
+  { category: '자율', emoji: '🏖️', name: '버즈 홀리데이', badge: '자율', summary: '연 2일 특별휴가', details: '버즈빌리언의 자율적인 삶을 응원합니다. 연차와 별도로 매년 2일의 특별휴가가 제공됩니다. 자유롭게 원하는 때에 사용할 수 있습니다.', color: 'var(--autonomy)' },
+  { category: '자율', emoji: '⏰', name: '시간단위 연차', badge: '자율', summary: '1시간 단위로 연차 사용 가능', details: '반차, 반반차를 넘어 1시간 단위로 연차를 사용할 수 있습니다. 병원 방문, 개인 용무 등 필요한 만큼만 사용하세요.', color: 'var(--autonomy)' },
+  { category: '성장', emoji: '📚', name: '자기계발비', badge: '성장', summary: '분기 30만원 지원', details: '분기마다 30만원의 자기계발비가 지원됩니다. 온라인 강의, 자격증, 세미나 참가 등 성장을 위한 다양한 활동에 사용할 수 있습니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '📖', name: '도서구매', badge: '성장', summary: '무제한 도서 구매 지원', details: '업무 관련 도서뿐 아니라 자기계발, 교양 도서도 무제한으로 구매할 수 있습니다. 독서를 통한 성장을 적극 지원합니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '👥', name: '스터디그룹 지원', badge: '성장', summary: '스터디그룹 활동비 지원', details: '사내 스터디그룹을 구성하면 활동비를 지원합니다. 함께 공부하며 성장하는 문화를 만들어갑니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '🎓', name: '외부교육비', badge: '성장', summary: '외부 교육 참가비 지원', details: '컨퍼런스, 워크샵, 교육 프로그램 참가비를 지원합니다. 업계 최신 트렌드를 배우고 네트워크를 확장하세요.', color: 'var(--growth)' },
+  { category: '성장', emoji: '🗣️', name: '한국어교육', badge: '성장', summary: '외국인 직원 한국어 교육 지원', details: '글로벌 팀원들의 한국 생활 적응과 업무 소통을 위해 한국어 교육을 지원합니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '💻', name: '버즈챌린지', badge: '성장', summary: '사내 해커톤', details: '정기적으로 사내 해커톤인 버즈챌린지를 개최합니다. 새로운 아이디어를 실험하고, 팀 간 협업을 통해 혁신적인 프로젝트를 만들어보세요.', color: 'var(--growth)' },
+  { category: '성장', emoji: '🎉', name: '장기재직자 축하금', badge: '성장', summary: '장기 근속 축하 혜택', details: '장기간 함께해온 버즈빌리언에게 축하금과 특별 혜택을 제공합니다. 오래 함께할수록 더 큰 보상이 기다립니다.', color: 'var(--growth)' },
+  { category: '성장', emoji: '✨', name: '브랜딩 리워드', badge: '성장', summary: '개인 브랜딩 활동 보상', details: '블로그 포스팅, 외부 발표, 오픈소스 기여 등 개인 브랜딩 활동에 대한 리워드를 제공합니다.', color: 'var(--growth)' },
+  { category: '불굴', emoji: '🏥', name: '종합검진', badge: '건강', summary: '연 1회 종합 건강검진', details: '매년 1회 종합 건강검진을 지원합니다. 건강한 몸에서 건강한 정신이, 건강한 정신에서 불굴의 의지가 나옵니다.', color: 'var(--grit)' },
+  { category: '불굴', emoji: '🛡️', name: '단체상해보험', badge: '건강', summary: '단체 상해보험 가입', details: '버즈빌리언 전원 단체상해보험에 가입되어 있습니다. 만약의 상황에도 안심하고 일에 집중할 수 있습니다.', color: 'var(--grit)' },
+  { category: '불굴', emoji: '🤝', name: '외부제휴서비스', badge: '건강', summary: '다양한 외부 제휴 혜택', details: '헬스장, 요가, 심리상담 등 다양한 외부 제휴 서비스를 할인된 가격으로 이용할 수 있습니다.', color: 'var(--grit)' },
+  { category: '원팀', emoji: '🎸', name: '동호회 지원', badge: '소통', summary: '동호회 활동비 지원', details: '사내 동호회 활동비를 지원합니다. 운동, 음악, 취미 등 다양한 동호회에서 팀원들과 함께하세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '🍽️', name: '회식비', badge: '소통', summary: '팀 회식비 지원', details: '팀 단위 회식비를 지원합니다. 맛있는 식사와 함께 팀워크를 강화하세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '👨‍💼', name: '리드활동비', badge: '소통', summary: '팀 리드 활동비 지원', details: '팀 리드에게 별도의 활동비를 지원합니다. 팀원들과의 1:1 미팅, 팀 빌딩 활동 등에 활용하세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '🍱', name: '식대 지원', badge: '소통', summary: '점심 식대 지원', details: '매일 점심 식대를 지원합니다. 함께 식사하며 소통하는 시간을 만들어보세요.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '🤰', name: '임신선물', badge: '소통', summary: '임신 축하 선물', details: '임신한 버즈빌리언에게 축하 선물을 드립니다. 새 생명의 시작을 함께 축하합니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '🎂', name: '생일축하', badge: '소통', summary: '생일 축하 혜택', details: '생일을 맞은 버즈빌리언에게 축하 메시지와 선물을 드립니다. 소중한 날을 함께 축하합니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '🎓', name: '졸업축하', badge: '소통', summary: '졸업 축하금', details: '대학원 등 학위 과정을 졸업한 버즈빌리언에게 축하금을 드립니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '👶', name: '자녀축하', badge: '소통', summary: '자녀 출산/입학 축하', details: '자녀의 출산, 입학 등 경사에 축하금을 드립니다. 가정의 기쁜 순간을 함께 나눕니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '👋', name: '퇴사선물', badge: '소통', summary: '퇴사 시 감사 선물', details: '함께한 시간에 감사하며 퇴사하는 버즈빌리언에게 감사 선물을 드립니다. 새로운 여정을 응원합니다.', color: 'var(--oneteam)' },
+  { category: '원팀', emoji: '💐', name: '경조사 지원', badge: '소통', summary: '경조사비 및 화환 지원', details: '결혼, 상(喪) 등 경조사에 경조사비와 화환을 지원합니다. 기쁜 일도 슬픈 일도 함께합니다.', color: 'var(--oneteam)' }
+];
+
+const sampleStories = [
+  { id: 1, value: '불굴', title: '3개월간의 시스템 마이그레이션 도전기', preview: '레거시 시스템 마이그레이션 프로젝트에서 수차례 실패에도 불구하고 포기하지 않고 끝내 성공시킨 이야기. 매일 새벽까지 원인을 분석하고, 팀원들과 함께 하나씩 문제를 해결해나갔습니다.', nominator: '김민수', nominee: '이서진', votes: 24, rating: 4.5, date: '2024-11-15', comments: ['정말 대단한 끈기!', '불굴의 정신 그 자체'] },
+  { id: 2, value: '원팀', title: '부서 간 벽을 허문 크로스펑셔널 프로젝트', preview: '마케팅, 개발, 디자인팀이 2주간 한 공간에서 함께 일하며 신규 광고 상품을 론칭한 사례. 각자의 전문성을 살리면서도 하나의 목표를 향해 달려간 원팀 정신의 모범 사례입니다.', nominator: '박지현', nominee: '프로덕트팀', votes: 31, rating: 4.8, date: '2024-11-20', comments: ['이래서 원팀이구나!', '부서 이기주의를 넘은 멋진 사례'] },
+  { id: 3, value: '성장', title: '비전공자에서 풀스택 개발자로', preview: '마케팅팀 출신으로 개발에 관심을 갖고, 자기계발비와 도서구매 지원을 활용해 독학으로 개발을 배운 뒤 실제 사내 툴을 개발한 감동적인 성장 스토리.', nominator: '최영호', nominee: '한소희', votes: 28, rating: 4.6, date: '2024-12-01', comments: ['성장 마인드셋의 정석!', '버즈빌이기에 가능한 이야기'] },
+  { id: 4, value: '자율', title: '스스로 발견한 비효율, 스스로 해결한 프로세스', preview: '아무도 시키지 않았지만 매주 3시간씩 낭비되던 보고 프로세스를 발견하고, 자동화 스크립트를 만들어 전사 업무 효율을 크게 높인 이야기. 책임감 기반 자율의 좋은 예시입니다.', nominator: '익명', nominee: '정다은', votes: 19, rating: 4.3, date: '2024-12-05', comments: ['이런 게 진짜 자율이지!'] }
+];
+
+const quizQuestions = [
+  { q: '버즈빌의 미션은?', a: 'We boost our client growth in a way people love', options: ['We make the world a better place', 'We boost our client growth in a way people love', 'Innovation for everyone', 'Connect people with technology'], cat: 'mission' },
+  { q: '5.0에서 새롭게 추가(부활)된 핵심가치는?', a: '불굴 (Grit)', options: ['소통', '불굴 (Grit)', '고객중심', '혁신'], cat: 'core-values' },
+  { q: '컬쳐북 1.0의 핵심가치 개수는?', a: '5개', options: ['3개', '4개', '5개', '6개'], cat: 'history' },
+  { q: '자기계발비 분기 지원금은?', a: '30만원', options: ['20만원', '30만원', '50만원', '100만원'], cat: 'benefits' },
+  { q: '5.0에서 "소통"이 변화한 가치는?', a: '원팀 (One Team)', options: ['협력', '원팀 (One Team)', '커뮤니케이션', '시너지'], cat: 'core-values' },
+  { q: '4.0은 창립 몇 주년에 만들어졌나?', a: '10주년', options: ['5주년', '7주년', '10주년', '15주년'], cat: 'history' },
+  { q: '버즈빌 컬쳐북이 처음 만들어진 계기는?', a: '미국 진출 실패 후 조직문화 각성', options: ['창립 기념', '미국 진출 실패 후 조직문화 각성', '투자 유치를 위해', '직원 수 100명 돌파'], cat: 'history' },
+  { q: '1.0의 테마곡은?', a: 'The Impossible Dream', options: ['Bohemian Rhapsody', 'The Impossible Dream', 'We Are the Champions', 'Imagine'], cat: 'history' },
+  { q: '2.0의 핵심 슬로건은?', a: 'Outperform with Less', options: ['Move Fast', 'Outperform with Less', 'Think Different', 'Do More with Less'], cat: 'history' },
+  { q: 'JGID의 뜻은?', a: 'Just Get It Done', options: ['Just Go In Deep', 'Just Get It Done', 'Join Great Ideas Daily', 'Just Give It Direction'], cat: 'history' },
+  { q: '버즈빌의 CEO가 강조한 메시지는?', a: '유능함보다 끝까지 버티는 사람을 믿습니다', options: ['빠르게 실패하고 빠르게 배워라', '유능함보다 끝까지 버티는 사람을 믿습니다', '고객이 곧 답이다', '기술이 세상을 바꾼다'], cat: 'core-values' },
+  { q: '도서구매 지원 한도는?', a: '무제한', options: ['월 5만원', '분기 10만원', '연 50만원', '무제한'], cat: 'benefits' },
+  { q: '버즈 홀리데이는 연 며칠인가?', a: '2일', options: ['1일', '2일', '3일', '5일'], cat: 'benefits' },
+  { q: '시간단위 연차의 최소 사용 단위는?', a: '1시간', options: ['30분', '1시간', '2시간', '반일'], cat: 'benefits' },
+  { q: '버즈챌린지는 어떤 행사인가?', a: '사내 해커톤', options: ['체육대회', '사내 해커톤', '문화 축제', '봉사활동'], cat: 'benefits' },
+  { q: '컬쳐북 3.0의 특징은?', a: '한영 이중 언어 지원', options: ['최초 제작', '한영 이중 언어 지원', '핵심가치 4개로 축소', '불굴 가치 추가'], cat: 'history' },
+  { q: '"책임감 기반 자율"의 영문명은?', a: 'Responsible Autonomy', options: ['Free Autonomy', 'Responsible Autonomy', 'Self-directed Freedom', 'Autonomous Leadership'], cat: 'core-values' },
+  { q: '4.0에는 있었지만 5.0에서 빠진 핵심가치는?', a: '고객중심', options: ['소통', '성장', '고객중심', '자율'], cat: 'core-values' },
+  { q: '종합검진은 몇 회 지원되나?', a: '연 1회', options: ['분기 1회', '연 1회', '연 2회', '격년 1회'], cat: 'benefits' },
+  { q: '핵심가치 "원팀"의 색상은?', a: '퍼플 (Purple)', options: ['블루', '틸', '오렌지', '퍼플 (Purple)'], cat: 'core-values' },
+  { q: '컬쳐북이 처음 만들어진 해는?', a: '2015년', options: ['2012년', '2013년', '2015년', '2017년'], cat: 'history' },
+  { q: '성장 마인드셋의 정의에 해당하는 것은?', a: '더 나아지고 싶다는 마음이 있다면 함께 한다', options: ['최고만을 추구한다', '더 나아지고 싶다는 마음이 있다면 함께 한다', '실패를 허용하지 않는다', '경쟁에서 이기는 것이 성장이다'], cat: 'core-values' },
+  { q: '불굴의 정의에 해당하는 것은?', a: '어려울수록 멈추지 않는 사람', options: ['혼자서 모든 것을 해내는 사람', '가장 유능한 사람', '어려울수록 멈추지 않는 사람', '빠르게 방향을 전환하는 사람'], cat: 'core-values' },
+  { q: '원팀의 이전 버전 가치는?', a: '소통 (Communication)', options: ['협업 (Collaboration)', '소통 (Communication)', '화합 (Harmony)', '공감 (Empathy)'], cat: 'core-values' },
+  { q: '자기계발비로 사용할 수 없는 것은?', a: '개인 여행 경비', options: ['온라인 강의', '자격증 비용', '세미나 참가', '개인 여행 경비'], cat: 'benefits' },
+  { q: '버즈빌 컬쳐북은 총 몇 번 개정되었나?', a: '4번 (v1.0→v5.0)', options: ['2번', '3번', '4번 (v1.0→v5.0)', '5번'], cat: 'history' },
+  { q: '4.0 컬쳐북에 포함된 특별한 콘텐츠는?', a: '버즈빌리언 인터뷰', options: ['CEO 자서전', '버즈빌리언 인터뷰', '경쟁사 분석', '재무 보고서'], cat: 'history' },
+  { q: '다음 중 "원팀" 관련 복지가 아닌 것은?', a: '자기계발비', options: ['동호회 지원', '회식비', '자기계발비', '생일축하'], cat: 'benefits' },
+  { q: '2.0에서 새로 도입된 행동 지침이 아닌 것은?', a: 'Move Fast', options: ['JGID', 'Be Bold', 'Take the Initiative', 'Move Fast'], cat: 'history' },
+  { q: '핵심가치 "자율"의 색상은?', a: '블루 (#2E75B6)', options: ['블루 (#2E75B6)', '틸', '오렌지', '퍼플'], cat: 'core-values' }
+];
+
+const sampleWallMessages = [
+  { to: '김서연', from: '이준혁', message: '프로젝트 마감 전 밤늦게까지 함께 남아서 도와줘서 정말 고마워요. 덕분에 무사히 마칠 수 있었습니다!', value: '원팀', date: '2024-12-01' },
+  { to: '박민준', from: '최수아', message: '새로 들어온 제가 적응할 수 있도록 항상 먼저 다가와줘서 감사합니다. 진정한 원팀의 모습이에요.', value: '원팀', date: '2024-12-03' },
+  { to: '정하은', from: '김태호', message: '매주 스터디를 이끌어주셔서 감사합니다. 덕분에 새로운 기술을 배울 수 있었어요!', value: '성장', date: '2024-12-05' },
+  { to: '한소진', from: '이유진', message: '아무도 시키지 않았는데 문제를 먼저 발견하고 해결해주셔서 감사합니다. 진짜 자율의 모범!', value: '자율', date: '2024-12-07' },
+  { to: '오건우', from: '서지민', message: '어려운 프로젝트에서 포기하지 않고 끝까지 해내는 모습이 정말 멋있었습니다. 불굴의 정신!', value: '불굴', date: '2024-12-10' },
+  { to: '전체 팀원', from: '익명', message: '버즈빌과 함께해서 행복합니다. 모든 팀원분들 감사합니다!', value: '원팀', date: '2024-12-12' }
+];
+
+// ===== STATE =====
+let currentFilter = '전체';
+let currentSort = 'latest';
+let stories = [];
+let wallMessages = [];
+let quizState = { questions: [], current: 0, score: 0, answers: [] };
+
+// ===== ROUTER =====
+function navigateTo(page) {
+  window.location.hash = page;
+}
+
+function router() {
+  const hash = window.location.hash.slice(1) || 'home';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + hash);
+  if (target) {
+    target.classList.add('active');
+  } else {
+    document.getElementById('page-home').classList.add('active');
+  }
+
+  // Update nav active
+  document.querySelectorAll('.nav-menu a').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + hash) a.classList.add('active');
+  });
+
+  window.scrollTo(0, 0);
+  observeFadeIns();
+}
+
+window.addEventListener('hashchange', router);
+window.addEventListener('DOMContentLoaded', () => {
+  loadData();
+  router();
+  renderBenefits('전체');
+  renderStories();
+  updateComparison();
+  renderAwardsDashboard();
+  setupScrollObserver();
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+});
+
+// ===== NAVIGATION =====
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('open');
+}
+
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('active');
+  document.getElementById('navMenu').classList.remove('open');
+}
+
+// ===== INTERSECTION OBSERVER =====
+function setupScrollObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+function observeFadeIns() {
+  setTimeout(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+  }, 50);
+}
+
+// ===== DATA PERSISTENCE =====
+function loadData() {
+  const savedStories = localStorage.getItem('buzzvilStories');
+  stories = savedStories ? JSON.parse(savedStories) : [...sampleStories];
+
+  const savedWall = localStorage.getItem('buzzvilWall');
+  wallMessages = savedWall ? JSON.parse(savedWall) : [...sampleWallMessages];
+}
+
+function saveStories() {
+  localStorage.setItem('buzzvilStories', JSON.stringify(stories));
+}
+
+function saveWall() {
+  localStorage.setItem('buzzvilWall', JSON.stringify(wallMessages));
+}
+
+// ===== PDF MODAL =====
+function openPdfModal(version, url) {
+  document.getElementById('pdfModalTitle').textContent = 'Culture Book ' + version;
+  document.getElementById('pdfIframe').src = url;
+  document.getElementById('pdfModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePdfModal() {
+  document.getElementById('pdfModal').classList.remove('active');
+  document.getElementById('pdfIframe').src = '';
+  document.body.style.overflow = '';
+}
+
+// ===== VERSION COMPARISON =====
+function updateComparison() {
+  const a = document.getElementById('compareA').value;
+  const b = document.getElementById('compareB').value;
+  const vA = versionData[a];
+  const vB = versionData[b];
+
+  document.getElementById('comparisonResult').innerHTML = `
+    <div class="comparison-col">
+      <h4>${vA.version} (${vA.year})</h4>
+      <p style="font-weight:600; margin-bottom:8px; color:var(--white);">${vA.mission}</p>
+      <div style="margin-bottom:12px;">${vA.values.map(v => '<span class="value-badge">' + v + '</span>').join(' ')}</div>
+      <p style="font-size:0.85rem; color:var(--muted);">${vA.keyChanges}</p>
+    </div>
+    <div class="comparison-col">
+      <h4>${vB.version} (${vB.year})</h4>
+      <p style="font-weight:600; margin-bottom:8px; color:var(--white);">${vB.mission}</p>
+      <div style="margin-bottom:12px;">${vB.values.map(v => '<span class="value-badge">' + v + '</span>').join(' ')}</div>
+      <p style="font-size:0.85rem; color:var(--muted);">${vB.keyChanges}</p>
+    </div>
+  `;
+}
+</script>
+
+<script>
+// ===== AWARDS =====
+function getValueColor(value) {
+  const map = { '자율': 'var(--autonomy)', '성장': 'var(--growth)', '불굴': 'var(--grit)', '원팀': 'var(--oneteam)' };
+  return map[value] || 'var(--navy)';
+}
+
+function renderAwardsDashboard() {
+  const total = stories.length;
+  const totalVotes = stories.reduce((s, st) => s + st.votes, 0);
+  const topStory = [...stories].sort((a, b) => b.votes - a.votes)[0];
+  const values = ['자율', '성장', '불굴', '원팀'];
+
+  document.getElementById('awardsDashboard').innerHTML = `
+    <div class="dashboard-card"><div class="dash-number">${total}</div><div class="dash-label">Total Stories</div></div>
+    <div class="dashboard-card"><div class="dash-number" style="color:var(--accent);">${totalVotes}</div><div class="dash-label">Total Votes</div></div>
+    <div class="dashboard-card"><div class="dash-number">${topStory ? topStory.votes : 0}</div><div class="dash-label">Top Story Votes</div></div>
+    <div class="dashboard-card"><div class="dash-number">${values.length}</div><div class="dash-label">Value Categories</div></div>
+  `;
+}
+
+function renderStories() {
+  let filtered = currentFilter === '전체' ? [...stories] : stories.filter(s => s.value === currentFilter);
+  if (currentSort === 'votes') filtered.sort((a, b) => b.votes - a.votes);
+  else filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  const grid = document.getElementById('storiesGrid');
+  grid.innerHTML = filtered.map(s => `
+    <div class="story-card" onclick="showStoryDetail(${s.id})">
+      <span class="story-badge" style="background: ${getValueColor(s.value)};">${s.value}</span>
+      <h3>${s.title}</h3>
+      <p class="preview">${s.preview}</p>
+      <div class="story-meta">
+        <span>${s.nominator || 'Anonymous'} &rarr; ${s.nominee}</span>
+        <span class="story-votes">&#9733; ${s.votes}</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Hide detail when showing list
+  document.getElementById('storyDetail').classList.remove('active');
+  grid.style.display = '';
+}
+
+function filterStories(value) {
+  currentFilter = value;
+  document.querySelectorAll('#awardFilterTabs .filter-tab').forEach(t => {
+    const tabText = t.textContent.trim();
+    const match = (value === '전체' && tabText === 'All') || tabText === value;
+    t.classList.toggle('active', match);
+  });
+  renderStories();
+}
+
+function sortStories() {
+  currentSort = document.getElementById('awardSort').value;
+  renderStories();
+}
+
+function showStoryDetail(id) {
+  const s = stories.find(st => st.id === id);
+  if (!s) return;
+  document.getElementById('storiesGrid').style.display = 'none';
+  const detail = document.getElementById('storyDetail');
+  detail.classList.add('active');
+  detail.innerHTML = `
+    <div style="background:var(--glass-bg); backdrop-filter:blur(24px); border:1px solid var(--glass-border); border-radius:16px; padding:32px; margin-bottom:24px;">
+      <button class="btn btn-outline" onclick="renderStories()" style="margin-bottom: 20px;">&larr; Back to List</button>
+      <span class="story-badge" style="background: ${getValueColor(s.value)}; display:inline-block; padding:4px 12px; border-radius:4px; font-size:0.75rem; font-weight:600; color:white; margin-bottom:12px;">${s.value}</span>
+      <h2 style="font-size:1.4rem; font-weight:700; margin-bottom:8px; color:var(--white);">${s.title}</h2>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:16px;">${s.nominator || 'Anonymous'} &rarr; ${s.nominee} | ${s.date}</p>
+      <p style="font-size:0.95rem; line-height:1.8; margin-bottom:24px; color:var(--muted);">${s.preview}</p>
+
+      <div style="margin-bottom:24px;">
+        <p style="font-weight:600; margin-bottom:8px; color:var(--white);">How well does this story demonstrate our values?</p>
+        <div class="star-rating" id="starRating">
+          ${[1,2,3,4,5].map(i => `<span class="star ${i <= Math.round(s.rating) ? 'filled' : ''}" onclick="rateStory(${s.id}, ${i})">&#9733;</span>`).join('')}
+        </div>
+        <span style="font-size:0.85rem; color:var(--muted);">Average ${s.rating} (${s.votes} votes)</span>
+      </div>
+
+      <div>
+        <h4 style="font-size:1rem; font-weight:600; margin-bottom:12px; color:var(--white);">Comments (${(s.comments || []).length})</h4>
+        ${(s.comments || []).map(c => `<div style="padding:12px; background:rgba(255,255,255,0.04); border-radius:12px; margin-bottom:8px; font-size:0.9rem; color:var(--muted);">${c}</div>`).join('')}
+        <div style="display:flex; gap:8px; margin-top:12px;">
+          <input type="text" id="commentInput" placeholder="Leave a comment..." style="flex:1; padding:10px 16px; border:1px solid var(--glass-border); border-radius:8px; font-family:inherit; color:var(--white); background:var(--glass-bg);">
+          <button class="btn btn-accent" onclick="addComment(${s.id})">Post</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function rateStory(id, rating) {
+  const s = stories.find(st => st.id === id);
+  if (!s) return;
+  s.votes++;
+  s.rating = Math.round(((s.rating * (s.votes - 1)) + rating) / s.votes * 10) / 10;
+  saveStories();
+  showStoryDetail(id);
+  renderAwardsDashboard();
+}
+
+function addComment(id) {
+  const input = document.getElementById('commentInput');
+  if (!input.value.trim()) return;
+  const s = stories.find(st => st.id === id);
+  if (!s.comments) s.comments = [];
+  s.comments.push(input.value.trim());
+  saveStories();
+  showStoryDetail(id);
+}
+
+function submitStory() {
+  const nominee = document.getElementById('storyNominee').value.trim();
+  const value = document.getElementById('storyValue').value;
+  const title = document.getElementById('storyTitle').value.trim();
+  const content = document.getElementById('storyContent').value.trim();
+  const author = document.getElementById('storyAuthor').value.trim() || 'Anonymous';
+
+  if (!nominee || !title || !content) {
+    alert('Please fill in nominee, title, and story.');
+    return;
+  }
+
+  const newStory = {
+    id: Date.now(),
+    value: value,
+    title: title,
+    preview: content,
+    nominator: author,
+    nominee: nominee,
+    votes: 0,
+    rating: 0,
+    date: new Date().toISOString().slice(0, 10),
+    comments: []
+  };
+
+  stories.unshift(newStory);
+  saveStories();
+  renderStories();
+  renderAwardsDashboard();
+
+  document.getElementById('storyNominee').value = '';
+  document.getElementById('storyTitle').value = '';
+  document.getElementById('storyContent').value = '';
+  document.getElementById('storyAuthor').value = '';
+  alert('Story submitted!');
+}
+
+// ===== BENEFITS =====
+function renderBenefits(category) {
+  const filtered = category === '전체' ? benefitsData : benefitsData.filter(b => b.category === category);
+  document.getElementById('benefitsList').innerHTML = filtered.map((b, i) => `
+    <div class="benefit-item" id="benefit-${category}-${i}">
+      <div class="benefit-top">
+        <h3>${b.name}</h3>
+        <span class="b-badge">${b.badge}</span>
+      </div>
+      <p class="b-summary">${b.summary}</p>
+      <div class="b-details">${b.details}</div>
+      <button class="expand-btn" onclick="toggleBenefit('benefit-${category}-${i}', this)">Details &#9660;</button>
+    </div>
+  `).join('');
+}
+
+function filterBenefits(category, btn) {
+  const colors = { '전체': 'var(--white)', '자율': 'var(--white)', '성장': 'var(--white)', '불굴': 'var(--white)', '원팀': 'var(--white)' };
+  document.querySelectorAll('.benefit-tab').forEach(t => {
+    t.classList.remove('active');
+    t.style.background = '';
+    t.style.color = '';
+    t.style.borderColor = '';
+  });
+  btn.classList.add('active');
+  btn.style.background = 'var(--white)';
+  btn.style.color = 'var(--navy)';
+  btn.style.borderColor = 'var(--white)';
+  renderBenefits(category);
+}
+
+function toggleBenefit(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('expanded');
+  btn.innerHTML = el.classList.contains('expanded') ? 'Collapse &#9650;' : 'Details &#9660;';
+}
+
+function submitSuggestion(e) {
+  e.preventDefault();
+  const name = document.getElementById('suggestName').value;
+  const email = document.getElementById('suggestEmail').value;
+  const value = document.getElementById('suggestValue').value;
+  const title = document.getElementById('suggestTitle').value;
+  const content = document.getElementById('suggestContent').value;
+  const subject = encodeURIComponent('[Benefit Suggestion] ' + title);
+  const body = encodeURIComponent(`Suggester: ${name}\nEmail: ${email}\nRelated Value: ${value}\n\n${content}`);
+  window.location.href = `mailto:hr@buzzvil.com?subject=${subject}&body=${body}`;
+}
+
+// ===== QUIZ =====
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  const selected = shuffleArray(quizQuestions).slice(0, 10);
+  quizState = { questions: selected, current: 0, score: 0, answers: [] };
+  document.getElementById('quizStart').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const { questions, current } = quizState;
+  if (current >= questions.length) {
+    showQuizResult();
+    return;
+  }
+  const q = questions[current];
+  const shuffledOptions = shuffleArray(q.options);
+
+  document.getElementById('quizArea').innerHTML = `
+    <div class="progress-bar"><div class="progress-fill" style="width: ${(current / questions.length) * 100}%"></div></div>
+    <div class="quiz-question">
+      <div class="q-number">Q${current + 1} / ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${shuffledOptions.map((opt, i) => `
+          <button class="q-option" id="opt-${i}" onclick="answerQuiz(${i}, '${opt.replace(/'/g, "\\'")}', '${q.a.replace(/'/g, "\\'")}')">${opt}</button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function answerQuiz(idx, selected, correct) {
+  const isCorrect = selected === correct;
+  if (isCorrect) quizState.score++;
+  quizState.answers.push({ q: quizState.questions[quizState.current].q, selected, correct, isCorrect });
+
+  document.querySelectorAll('.q-option').forEach((btn, i) => {
+    btn.disabled = true;
+    const btnText = btn.textContent.trim();
+    if (btnText === correct) btn.classList.add('correct');
+    if (i === idx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  setTimeout(() => {
+    quizState.current++;
+    renderQuestion();
+  }, 1200);
+}
+
+function showQuizResult() {
+  document.getElementById('quizArea').style.display = 'none';
+  const { score, answers } = quizState;
+  let grade = '';
+  if (score === 10) grade = 'Master';
+  else if (score >= 7) grade = 'Expert';
+  else if (score >= 4) grade = 'Rookie';
+  else grade = 'Newbie';
+
+  const wrongAnswers = answers.filter(a => !a.isCorrect);
+
+  document.getElementById('quizResult').style.display = 'block';
+  document.getElementById('quizResult').innerHTML = `
+    <div class="quiz-result">
+      <div class="result-score">${score} / 10</div>
+      <div class="result-grade">${grade}</div>
+      <p style="color:var(--muted); margin-bottom:24px;">
+        ${score === 10 ? 'Perfect! You are a true Buzzvillian!' : score >= 7 ? 'Great job! You know Buzzvil culture well!' : score >= 4 ? 'Good start! Read the Culture Book for more!' : 'Lots to learn! Explore the Culture Book!'}
+      </p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:24px;">
+        <button class="btn btn-accent" onclick="startQuiz()">Try Again</button>
+        <button class="btn btn-outline" onclick="copyShareText()">Share Result</button>
+      </div>
+      ${wrongAnswers.length > 0 ? `
+        <div class="wrong-answers">
+          <h4 style="font-size:1rem; font-weight:600; margin-bottom:16px; color:var(--white);">Review Wrong Answers</h4>
+          ${wrongAnswers.map(a => `
+            <div class="wrong-answer-item">
+              <div class="wa-q">${a.q}</div>
+              <div style="color:var(--muted); font-size:0.85rem;">Your answer: ${a.selected}</div>
+              <div class="wa-correct">Correct: ${a.correct}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function copyShareText() {
+  const text = `I scored ${quizState.score}/10 on the Buzzvil Culture Quiz! I'm a ${quizState.score === 10 ? 'Master' : quizState.score >= 7 ? 'Expert' : quizState.score >= 4 ? 'Rookie' : 'Newbie'}! Try it yourself!`;
+  navigator.clipboard.writeText(text).then(() => alert('Result copied to clipboard!')).catch(() => {
+    prompt('Copy this text:', text);
+  });
+}
+
+// ===== CHATBOT =====
+const chatRules = [
+  { keywords: ['핵심가치', 'core value', '가치'], response: '버즈빌의 4가지 핵심가치는:\n\n1. 책임감 기반 자율 (Responsible Autonomy) - 스스로 선택하고 끝까지 흔들리지 않는 사람\n2. 성장 마인드셋 (Growth Mindset) - 더 나아지고 싶다는 마음이 있다면 함께 한다\n3. 불굴 (Grit) - 어려울수록 멈추지 않는 사람\n4. 원팀 (One Team) - 혼자서는 만들 수 없는 미래를 함께 만든다' },
+  { keywords: ['자율', 'autonomy'], response: '책임감 기반 자율 (Responsible Autonomy)\n\n"스스로 선택하고 끝까지 흔들리지 않는 사람"\n\n자율은 방임이 아닙니다. 스스로 선택한 일에 책임을 지고, 선택한 방향이 옳다고 믿으면 끝까지 밀어붙이는 태도가 진정한 자율입니다.\n\n관련 복지: 버즈 홀리데이 (연 2일), 시간단위 연차' },
+  { keywords: ['성장', 'growth'], response: '성장 마인드셋 (Growth Mindset)\n\n"더 나아지고 싶다는 마음이 있다면 함께 한다"\n\n재능보다 노력을, 현재 실력보다 성장 가능성을 봅니다. 실패를 두려워하지 않고 배우는 사람을 지원합니다.\n\n관련 복지: 자기계발비 (분기 30만원), 무제한 도서구매, 버즈챌린지, 외부교육비 지원' },
+  { keywords: ['불굴', 'grit'], response: '불굴 (Grit)\n\n"어려울수록 멈추지 않는 사람"\n\n5.0에서 새롭게 추가된 가치입니다. CEO의 "유능함보다 끝까지 버티는 사람을 믿습니다"라는 철학을 담고 있습니다. 포기하고 싶은 순간에 한 번 더 시도하는 것이 불굴입니다.\n\n관련 복지: 종합검진, 단체상해보험' },
+  { keywords: ['원팀', 'one team'], response: '원팀 (One Team)\n\n"혼자서는 만들 수 없는 미래를 함께 만든다"\n\n4.0의 "소통"이 5.0에서 "원팀"으로 진화했습니다. 소통은 수단이고, 원팀은 목표입니다. 부서와 직급을 넘어 하나의 팀으로 움직이는 것이 원팀입니다.\n\n관련 복지: 동호회 지원, 회식비, 생일축하, 경조사 지원' },
+  { keywords: ['미션', 'mission'], response: '버즈빌의 미션:\n\n"We boost our client growth in a way people love."\n\n사람들이 좋아하는 방식으로 고객의 성장을 촉진합니다. 이 미션은 4.0에서 처음 정립되었으며, 5.0에서도 이어지고 있습니다.' },
+  { keywords: ['비전', 'vision'], response: '버즈빌은 "사람들이 좋아하는 방식으로 고객의 성장을 촉진한다"는 미션 아래, 광고 기술을 통해 사용자와 광고주 모두에게 가치를 제공하는 것을 목표로 합니다.' },
+  { keywords: ['자기계발', '교육', '도서'], response: '성장 관련 복지:\n\n- 자기계발비: 분기 30만원 지원\n- 도서구매: 무제한 지원\n- 스터디그룹 활동비 지원\n- 외부교육비 지원\n- 한국어교육 (외국인 직원 대상)\n- 버즈챌린지 (사내 해커톤)\n- 브랜딩 리워드' },
+  { keywords: ['복지', 'benefit', '혜택'], response: '버즈빌 복지는 핵심가치와 연결되어 있습니다:\n\n자율: 버즈 홀리데이 (연 2일), 시간단위 연차\n성장: 자기계발비 (분기 30만원), 무제한 도서구매, 버즈챌린지 등\n불굴(건강): 종합검진, 단체상해보험\n원팀(소통): 동호회 지원, 회식비, 생일축하, 경조사 지원 등\n\n자세한 내용은 복지제도 페이지를 확인해보세요!' },
+  { keywords: ['어워드', 'award', '투표'], response: '버즈어워드는 핵심가치를 실천한 사연에 투표하는 프로그램입니다.\n\n사람에게 투표하는 것이 아니라, 핵심가치를 보여주는 이야기에 투표합니다. 자율/성장/불굴/원팀 각 가치별 사연을 등록하고, 1-5점으로 투표할 수 있습니다.' },
+  { keywords: ['역사', '변천', 'history', '컬쳐북'], response: '컬쳐북 변천사:\n\nv1.0 (2015): 5개 핵심가치, The Impossible Dream\nv2.0 (2017): Outperform with Less, JGID 도입\nv3.0 (2019): 모던 브랜딩 리뉴얼, 한영 이중언어\nv4.0 (2022): 10주년, 미션 재정립, 4개 핵심가치\nv5.0 (2024): 불굴 추가, 소통→원팀 진화\n\n변천사 페이지에서 각 버전의 PDF도 볼 수 있습니다!' },
+  { keywords: ['퀴즈', 'quiz'], response: '컬쳐 퀴즈를 통해 버즈빌 문화에 대한 이해도를 테스트할 수 있습니다!\n\n30개 문제 중 랜덤 10개가 출제되며, 미션/핵심가치/역사/복지 등 다양한 카테고리의 문제가 준비되어 있습니다.\n\n퀴즈 페이지에서 도전해보세요!' },
+  { keywords: ['버즈챌린지', 'hackathon', '해커톤'], response: '버즈챌린지는 버즈빌의 사내 해커톤입니다!\n\n정기적으로 개최되며, 새로운 아이디어를 실험하고 팀 간 협업을 통해 혁신적인 프로젝트를 만들어볼 수 있는 기회입니다. 성장 마인드셋의 핵심 복지 중 하나입니다.' }
+];
+
+function sendChat(preset) {
+  const input = document.getElementById('chatInput');
+  const msg = preset || input.value.trim();
+  if (!msg) return;
+  input.value = '';
+
+  const messages = document.getElementById('chatMessages');
+  messages.innerHTML += `<div class="chat-bubble user">${msg}</div>`;
+
+  const typing = document.getElementById('typingIndicator');
+  typing.classList.add('active');
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(() => {
+    typing.classList.remove('active');
+    const response = getBotResponse(msg);
+    messages.innerHTML += `<div class="chat-bubble bot">${response.replace(/\n/g, '<br>')}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+  }, 800 + Math.random() * 600);
+}
+
+function getBotResponse(msg) {
+  const lower = msg.toLowerCase();
+  for (const rule of chatRules) {
+    for (const kw of rule.keywords) {
+      if (lower.includes(kw.toLowerCase())) {
+        return rule.response;
+      }
+    }
+  }
+  return 'Great question! Try asking about our core values, benefits, history, or mission for more specific answers.';
+}
+
+// ===== CULTURE WALL (kept for data compatibility) =====
+const wallColors = {
+  '자율': '#1A2A35',
+  '성장': '#2A1A1A',
+  '불굴': '#2A2118',
+  '원팀': '#1A2230'
+};
+
+function renderWall(filter) {
+  const f = filter || '전체';
+  const filtered = f === '전체' ? wallMessages : wallMessages.filter(m => m.value === f);
+  const wallGrid = document.getElementById('wallGrid');
+  if (!wallGrid) return;
+}
+
+function filterWall(value) {}
+function openWallModal() {}
+function closeWallModal() {}
+function submitWallMessage() {}
+
+// Close modals on overlay click
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('active');
+    document.body.style.overflow = '';
+    const iframe = document.getElementById('pdfIframe');
+    if (iframe) iframe.src = '';
+  }
+});
+</script>
+</body>
+</html>
